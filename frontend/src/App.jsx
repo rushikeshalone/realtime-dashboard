@@ -12,6 +12,7 @@ import {
 } from './components/DashboardCards.jsx';
 import { formatCurrency, formatNumber } from './components/utils.jsx';
 import toast from 'react-hot-toast';
+import { useTheme } from 'next-themes';
 
 // ========================================================
 // TanStack Query — Real Backend API (SQL Server via Node.js)
@@ -110,6 +111,7 @@ function TopCards({ cards }) {
 // Main App
 // ========================================================
 export default function App() {
+  const { theme, setTheme } = useTheme();
   const [socketData, setSocketData] = useState({});
   const [timestamps, setTimestamps] = useState({});
   const [connected, setConnected] = useState(false);
@@ -218,6 +220,22 @@ export default function App() {
             <span className={`live-dot ${connected ? '' : 'offline'}`} />
             {connected ? 'LIVE' : 'OFFLINE'}
           </div>
+          
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            style={{
+              background: 'var(--bg-card)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border)',
+              borderRadius: '8px',
+              padding: '6px 12px',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontWeight: 500
+            }}
+          >
+            {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          </button>
           {lastUpdated && (
             <div className="last-updated">
               Updated: {new Date(lastUpdated).toLocaleTimeString('en-IN')}
