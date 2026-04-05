@@ -55,35 +55,35 @@ function AlertBanners({ alerts, onDismiss }) {
 // ========================================================
 function TopCards({ cards }) {
   const icons = {
-    'Total Deposits':     '🏦',
-    'Total Loans':        '💳',
-    'Net Profit':         '📈',
-    'Active Customers':   '👥',
+    'Total Deposits': '🏦',
+    'Total Loans': '💳',
+    'Net Profit': '📈',
+    'Active Customers': '👥',
     'Today Transactions': '⚡',
-    'CD Ratio':           '📊',
-    'Total Branches':     '🏢',
-    'NPA %':              '⚠️',
-    'Profit This Month':  '💰',
-    'Pending Clearance':  '🕐',
+    'CD Ratio': '📊',
+    'Total Branches': '🏢',
+    'NPA %': '⚠️',
+    'Profit This Month': '💰',
+    'Pending Clearance': '🕐',
   };
   const gradients = {
-    'Total Deposits':     'linear-gradient(135deg,#1e40af,#3b82f6)',
-    'Total Loans':        'linear-gradient(135deg,#5b21b6,#8b5cf6)',
-    'Net Profit':         'linear-gradient(135deg,#065f46,#10b981)',
-    'Active Customers':   'linear-gradient(135deg,#164e63,#06b6d4)',
+    'Total Deposits': 'linear-gradient(135deg,#1e40af,#3b82f6)',
+    'Total Loans': 'linear-gradient(135deg,#5b21b6,#8b5cf6)',
+    'Net Profit': 'linear-gradient(135deg,#065f46,#10b981)',
+    'Active Customers': 'linear-gradient(135deg,#164e63,#06b6d4)',
     'Today Transactions': 'linear-gradient(135deg,#92400e,#f59e0b)',
-    'CD Ratio':           'linear-gradient(135deg,#9b1c1c,#ef4444)',
-    'Total Branches':     'linear-gradient(135deg,#1e3a5f,#2563eb)',
-    'NPA %':              'linear-gradient(135deg,#7f1d1d,#dc2626)',
-    'Profit This Month':  'linear-gradient(135deg,#14532d,#16a34a)',
-    'Pending Clearance':  'linear-gradient(135deg,#78350f,#d97706)',
+    'CD Ratio': 'linear-gradient(135deg,#9b1c1c,#ef4444)',
+    'Total Branches': 'linear-gradient(135deg,#1e3a5f,#2563eb)',
+    'NPA %': 'linear-gradient(135deg,#7f1d1d,#dc2626)',
+    'Profit This Month': 'linear-gradient(135deg,#14532d,#16a34a)',
+    'Pending Clearance': 'linear-gradient(135deg,#78350f,#d97706)',
   };
 
   const formatValue = (card) => {
     if (card.DataType === 'CURRENCY') return formatCurrency(card.Value);
     if (card.DataType === 'PERCENTAGE' || card.DataType === 'PERCENT') {
-       const cleanVal = String(card.Value).replace(/[^0-9.-]+/g, "");
-       return `${parseFloat(cleanVal || 0).toFixed(2)}%`;
+      const cleanVal = String(card.Value).replace(/[^0-9.-]+/g, "");
+      return `${parseFloat(cleanVal || 0).toFixed(2)}%`;
     }
     return formatNumber(card.Value);
   };
@@ -110,9 +110,9 @@ function TopCards({ cards }) {
 // Main App
 // ========================================================
 export default function App() {
-  const [socketData, setSocketData]     = useState({});
-  const [timestamps, setTimestamps]     = useState({});
-  const [connected, setConnected]       = useState(false);
+  const [socketData, setSocketData] = useState({});
+  const [timestamps, setTimestamps] = useState({});
+  const [connected, setConnected] = useState(false);
   const [dismissedAlerts, setDismissedAlerts] = useState(new Set());
   const [showConnectionBanner, setShowConnectionBanner] = useState(false);
 
@@ -249,10 +249,7 @@ export default function App() {
 
         {/* Dashboard Sections */}
         <div className="dashboard-section">
-          <div className="section-header">
-            <span className="section-title">📊 Analytics & Monitoring</span>
-            {apiLoading && <span style={{ fontSize: 12, color: '#64748b', marginLeft: 8 }}>↻ Refreshing...</span>}
-          </div>
+
 
           <div className="dashboard-cards-grid">
             <CDRatioCard
