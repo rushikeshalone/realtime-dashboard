@@ -1,0 +1,7 @@
+=== DB Test Started ===
+Attempting to get pool using rewritten db.js...
+❌ Error: [Microsoft][ODBC Driver 17 for SQL Server]Protocol error in TDS stream
+ConnectionError: [Microsoft][ODBC Driver 17 for SQL Server]Protocol error in TDS stream
+    at PrivateConnection.callback2 (C:\Users\Rushikesh\Downloads\Dashboard\realtime-dashboard\backend\node_modules\mssql\lib\msnodesqlv8\connection-pool.js:46:17)
+    at Immediate.<anonymous> (C:\Users\Rushikesh\Downloads\Dashboard\realtime-dashboard\backend\node_modules\msnodesqlv8\lib\connection.js:47:14)
+    at process.processImmediate (node:internal/timers:504:21)

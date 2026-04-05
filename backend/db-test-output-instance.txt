@@ -1,0 +1,3 @@
+=== DB Test Instance Started ===
+Testing: Driver={ODBC Driver 17 for SQL Server};Server=localhost\RUSHI;Database=Rushi;Trusted_Connection=yes;
+✅ Successfully fetched data from db! Length: 3
