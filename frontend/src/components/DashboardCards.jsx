@@ -5,6 +5,52 @@ import {
   ResponsiveContainer, Cell
 } from 'recharts';
 import { ViewToggle, NoData, UpdatedBadge, formatCurrency, Badge } from './utils.jsx';
+import { useRef, useEffect } from 'react';
+
+// ============================================================
+// Auto Scroll Container 
+// ============================================================
+function AutoScrollContainer({ children, scrollActive }) {
+  const scrollRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (!scrollActive || isHovered) return;
+    const el = scrollRef.current;
+    if (!el) return;
+
+    let direction = 1; // 1 for down, -1 for up
+    let prevScrollTop = -1;
+
+    let intervalId = setInterval(() => {
+      if (el.scrollHeight > el.clientHeight) {
+        el.scrollTop += direction;
+        
+        if (direction === 1 && (el.scrollTop >= el.scrollHeight - el.clientHeight - 1 || el.scrollTop === prevScrollTop)) {
+          direction = -1; // Reverse to scroll UP
+        } else if (direction === -1 && (el.scrollTop <= 0 || el.scrollTop === prevScrollTop)) {
+          direction = 1; // Reverse to scroll DOWN
+        }
+        
+        prevScrollTop = el.scrollTop;
+      }
+    }, 40);
+
+    return () => clearInterval(intervalId);
+  }, [scrollActive, isHovered]);
+
+  return (
+    <div 
+      className="card-body" 
+      ref={scrollRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ scrollBehavior: 'auto' }}
+    >
+      {children}
+    </div>
+  );
+}
 
 const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'];
 
@@ -45,7 +91,7 @@ export function CDRatioCard({ data = [], timestamp }) {
         <ViewToggle view={view} onChange={setView} />
       </div>
 
-      <div className="card-body">
+      <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
           <table className="data-table">
             <thead>
@@ -86,7 +132,7 @@ export function CDRatioCard({ data = [], timestamp }) {
             </ResponsiveContainer>
           </div>
         )}
-      </div>
+      </AutoScrollContainer>
 
       <div className="card-footer">
         <span className="card-count">{data.length} branches</span>
@@ -121,7 +167,7 @@ export function LiveTransactionsCard({ data = [], timestamp }) {
         <ViewToggle view={view} onChange={setView} />
       </div>
 
-      <div className="card-body">
+      <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
           <table className="data-table">
             <thead>
@@ -161,12 +207,12 @@ export function LiveTransactionsCard({ data = [], timestamp }) {
                       fill={entry.type === 'CREDIT' ? '#10b981' : entry.type === 'DEBIT' ? '#ef4444' : '#3b82f6'}
                     />
                   ))}
-                </Bar>
+                 </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
         )}
-      </div>
+      </AutoScrollContainer>
 
       <div className="card-footer">
         <span className="card-count">{data.length} transactions</span>
@@ -203,7 +249,7 @@ export function BankPositionCard({ data = [], timestamp }) {
         <ViewToggle view={view} onChange={setView} />
       </div>
 
-      <div className="card-body">
+      <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
           <table className="data-table">
             <thead>
@@ -243,7 +289,7 @@ export function BankPositionCard({ data = [], timestamp }) {
             </ResponsiveContainer>
           </div>
         )}
-      </div>
+      </AutoScrollContainer>
 
       <div className="card-footer">
         <span className="card-count">{data.length} records</span>
@@ -280,7 +326,7 @@ export function CashPositionCard({ data = [], timestamp }) {
         <ViewToggle view={view} onChange={setView} />
       </div>
 
-      <div className="card-body">
+      <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
           <table className="data-table">
             <thead>
@@ -320,7 +366,7 @@ export function CashPositionCard({ data = [], timestamp }) {
             </ResponsiveContainer>
           </div>
         )}
-      </div>
+      </AutoScrollContainer>
 
       <div className="card-footer">
         <span className="card-count">{data.length} branches</span>
@@ -357,7 +403,7 @@ export function LoggedInUsersCard({ data = [], timestamp }) {
         <ViewToggle view={view} onChange={setView} />
       </div>
 
-      <div className="card-body">
+      <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
           <table className="data-table">
             <thead>
@@ -402,7 +448,7 @@ export function LoggedInUsersCard({ data = [], timestamp }) {
             </ResponsiveContainer>
           </div>
         )}
-      </div>
+      </AutoScrollContainer>
 
       <div className="card-footer">
         <span className="card-count">{data.length} users</span>
@@ -438,7 +484,7 @@ export function DayEndStatusCard({ data = [], timestamp }) {
         <ViewToggle view={view} onChange={setView} />
       </div>
 
-      <div className="card-body">
+      <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
           <table className="data-table">
             <thead>
@@ -485,7 +531,7 @@ export function DayEndStatusCard({ data = [], timestamp }) {
             </ResponsiveContainer>
           </div>
         )}
-      </div>
+      </AutoScrollContainer>
 
       <div className="card-footer">
         <span className="card-count">{data.length} branches</span>

@@ -3,14 +3,9 @@ import { formatDistanceToNow } from 'date-fns';
 
 export const formatCurrency = (val) => {
   if (val == null) return '₹0.00';
-  // Remove formatting characters like ?, ₹, commas, etc.
   const cleanVal = String(val).replace(/[^0-9.-]+/g, "");
   const num = parseFloat(cleanVal) || 0;
-
-  if (num >= 10000000) return `₹${(num / 10000000).toFixed(2)}Cr`;
-  if (num >= 100000) return `₹${(num / 100000).toFixed(2)}L`;
-  if (num >= 1000) return `₹${(num / 1000).toFixed(1)}K`;
-  return `₹${num.toFixed(2)}`;
+  return `₹${num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 };
 
 export const formatNumber = (val) => {
