@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rows>
+  <Row>
+    <CashPositionId>60</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.090Z</ReportDate>
+    <OrgElementId>12</OrgElementId>
+    <BranchName>Dhule Branch</BranchName>
+    <OpeningCashPosition>10000</OpeningCashPosition>
+    <CurrentCashPosition>15000</CurrentCashPosition>
+    <DepositPosition>5000</DepositPosition>
+    <WithdrawlPosition>2000</WithdrawlPosition>
+    <TotalCashPosition>13000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>59</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.090Z</ReportDate>
+    <OrgElementId>11</OrgElementId>
+    <BranchName>Jalgaon Branch</BranchName>
+    <OpeningCashPosition>840000</OpeningCashPosition>
+    <CurrentCashPosition>990000</CurrentCashPosition>
+    <DepositPosition>410000</DepositPosition>
+    <WithdrawlPosition>260000</WithdrawlPosition>
+    <TotalCashPosition>990000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>58</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.087Z</ReportDate>
+    <OrgElementId>10</OrgElementId>
+    <BranchName>Sangli Branch</BranchName>
+    <OpeningCashPosition>1050000</OpeningCashPosition>
+    <CurrentCashPosition>1280000</CurrentCashPosition>
+    <DepositPosition>520000</DepositPosition>
+    <WithdrawlPosition>290000</WithdrawlPosition>
+    <TotalCashPosition>1280000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>57</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.083Z</ReportDate>
+    <OrgElementId>9</OrgElementId>
+    <BranchName>Satara Branch</BranchName>
+    <OpeningCashPosition>780000</OpeningCashPosition>
+    <CurrentCashPosition>920000</CurrentCashPosition>
+    <DepositPosition>380000</DepositPosition>
+    <WithdrawlPosition>240000</WithdrawlPosition>
+    <TotalCashPosition>920000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>56</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.083Z</ReportDate>
+    <OrgElementId>8</OrgElementId>
+    <BranchName>Kolhapur Branch</BranchName>
+    <OpeningCashPosition>1350000</OpeningCashPosition>
+    <CurrentCashPosition>1600000</CurrentCashPosition>
+    <DepositPosition>590000</DepositPosition>
+    <WithdrawlPosition>340000</WithdrawlPosition>
+    <TotalCashPosition>1600000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>55</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.080Z</ReportDate>
+    <OrgElementId>7</OrgElementId>
+    <BranchName>Solapur Branch</BranchName>
+    <OpeningCashPosition>950000</OpeningCashPosition>
+    <CurrentCashPosition>1150000</CurrentCashPosition>
+    <DepositPosition>430000</DepositPosition>
+    <WithdrawlPosition>230000</WithdrawlPosition>
+    <TotalCashPosition>1150000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>54</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.077Z</ReportDate>
+    <OrgElementId>6</OrgElementId>
+    <BranchName>Nagpur Branch</BranchName>
+    <OpeningCashPosition>2100000</OpeningCashPosition>
+    <CurrentCashPosition>2550000</CurrentCashPosition>
+    <DepositPosition>980000</DepositPosition>
+    <WithdrawlPosition>530000</WithdrawlPosition>
+    <TotalCashPosition>2550000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>53</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.077Z</ReportDate>
+    <OrgElementId>5</OrgElementId>
+    <BranchName>Aurangabad Br.</BranchName>
+    <OpeningCashPosition>1200000</OpeningCashPosition>
+    <CurrentCashPosition>1450000</CurrentCashPosition>
+    <DepositPosition>620000</DepositPosition>
+    <WithdrawlPosition>370000</WithdrawlPosition>
+    <TotalCashPosition>1450000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>52</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.073Z</ReportDate>
+    <OrgElementId>4</OrgElementId>
+    <BranchName>Mumbai Branch</BranchName>
+    <OpeningCashPosition>6500000</OpeningCashPosition>
+    <CurrentCashPosition>7200000</CurrentCashPosition>
+    <DepositPosition>2800000</DepositPosition>
+    <WithdrawlPosition>2100000</WithdrawlPosition>
+    <TotalCashPosition>7200000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>51</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.070Z</ReportDate>
+    <OrgElementId>3</OrgElementId>
+    <BranchName>Pune Branch</BranchName>
+    <OpeningCashPosition>3100000</OpeningCashPosition>
+    <CurrentCashPosition>3700000</CurrentCashPosition>
+    <DepositPosition>1200000</DepositPosition>
+    <WithdrawlPosition>600000</WithdrawlPosition>
+    <TotalCashPosition>3700000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>50</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.070Z</ReportDate>
+    <OrgElementId>2</OrgElementId>
+    <BranchName>Nashik Branch</BranchName>
+    <OpeningCashPosition>1800000</OpeningCashPosition>
+    <CurrentCashPosition>2100000</CurrentCashPosition>
+    <DepositPosition>850000</DepositPosition>
+    <WithdrawlPosition>550000</WithdrawlPosition>
+    <TotalCashPosition>2100000</TotalCashPosition>
+  </Row>
+  <Row>
+    <CashPositionId>49</CashPositionId>
+    <ReportDate>2026-04-05T14:12:33.067Z</ReportDate>
+    <OrgElementId>1</OrgElementId>
+    <BranchName>Head Office</BranchName>
+    <OpeningCashPosition>5200000</OpeningCashPosition>
+    <CurrentCashPosition>6100000</CurrentCashPosition>
+    <DepositPosition>2500000</DepositPosition>
+    <WithdrawlPosition>1600000</WithdrawlPosition>
+    <TotalCashPosition>6100000</TotalCashPosition>
+  </Row>
+</Rows>

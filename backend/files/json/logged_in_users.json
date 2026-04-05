@@ -1,0 +1,98 @@
+[
+  {
+    "LogedInUserId": 58,
+    "UserName": "user.pune2",
+    "UserRole": "USER",
+    "BranchName": "Pune Branch",
+    "LastLoginTime": "2026-04-05T14:10:33.127Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 52,
+    "UserName": "user.mumbai1",
+    "UserRole": "USER",
+    "BranchName": "Mumbai Branch",
+    "LastLoginTime": "2026-04-05T14:09:33.110Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 49,
+    "UserName": "admin.rushikesh",
+    "UserRole": "ADMIN",
+    "BranchName": "Head Office",
+    "LastLoginTime": "2026-04-05T14:07:33.100Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 55,
+    "UserName": "user.nagpur1",
+    "UserRole": "USER",
+    "BranchName": "Nagpur Branch",
+    "LastLoginTime": "2026-04-05T14:05:33.117Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 51,
+    "UserName": "mgr.pune",
+    "UserRole": "MANAGER",
+    "BranchName": "Pune Branch",
+    "LastLoginTime": "2026-04-05T14:04:33.107Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 50,
+    "UserName": "mgr.nashik",
+    "UserRole": "MANAGER",
+    "BranchName": "Nashik Branch",
+    "LastLoginTime": "2026-04-05T14:00:33.103Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 57,
+    "UserName": "mgr.kolhapur",
+    "UserRole": "MANAGER",
+    "BranchName": "Kolhapur Branch",
+    "LastLoginTime": "2026-04-05T13:57:33.123Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 53,
+    "UserName": "user.mumbai2",
+    "UserRole": "USER",
+    "BranchName": "Mumbai Branch",
+    "LastLoginTime": "2026-04-05T13:54:33.110Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 54,
+    "UserName": "mgr.aurangabad",
+    "UserRole": "MANAGER",
+    "BranchName": "Aurangabad Br.",
+    "LastLoginTime": "2026-04-05T13:47:33.113Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 60,
+    "UserName": "user.sangli",
+    "UserRole": "USER",
+    "BranchName": "Sangli Branch",
+    "LastLoginTime": "2026-04-05T13:42:33.137Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 56,
+    "UserName": "user.solapur",
+    "UserRole": "USER",
+    "BranchName": "Solapur Branch",
+    "LastLoginTime": "2026-04-05T13:32:33.120Z",
+    "IsActive": 1
+  },
+  {
+    "LogedInUserId": 59,
+    "UserName": "mgr.satara",
+    "UserRole": "MANAGER",
+    "BranchName": "Satara Branch",
+    "LastLoginTime": "2026-04-05T13:17:33.130Z",
+    "IsActive": 0
+  }
+]

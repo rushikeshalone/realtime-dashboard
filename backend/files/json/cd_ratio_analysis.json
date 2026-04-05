@@ -1,0 +1,110 @@
+[
+  {
+    "CDRatioAnalysisId": 60,
+    "OrgElementId": 12,
+    "BranchName": "Dhule Branch",
+    "Deposits": 4,
+    "Loans": 5,
+    "CDRatio": 6,
+    "ReportDate": "2026-04-05T14:12:32.980Z"
+  },
+  {
+    "CDRatioAnalysisId": 59,
+    "OrgElementId": 11,
+    "BranchName": "Jalgaon Branch",
+    "Deposits": 14000000,
+    "Loans": 9000000,
+    "CDRatio": 64.28,
+    "ReportDate": "2026-04-05T14:12:32.980Z"
+  },
+  {
+    "CDRatioAnalysisId": 58,
+    "OrgElementId": 10,
+    "BranchName": "Sangli Branch",
+    "Deposits": 16000000,
+    "Loans": 11500000,
+    "CDRatio": 71.87,
+    "ReportDate": "2026-04-05T14:12:32.977Z"
+  },
+  {
+    "CDRatioAnalysisId": 57,
+    "OrgElementId": 9,
+    "BranchName": "Satara Branch",
+    "Deposits": 12000000,
+    "Loans": 8000000,
+    "CDRatio": 66.67,
+    "ReportDate": "2026-04-05T14:12:32.977Z"
+  },
+  {
+    "CDRatioAnalysisId": 56,
+    "OrgElementId": 8,
+    "BranchName": "Kolhapur Branch",
+    "Deposits": 19000000,
+    "Loans": 14000000,
+    "CDRatio": 73.68,
+    "ReportDate": "2026-04-05T14:12:32.973Z"
+  },
+  {
+    "CDRatioAnalysisId": 55,
+    "OrgElementId": 7,
+    "BranchName": "Solapur Branch",
+    "Deposits": 15000000,
+    "Loans": 9500000,
+    "CDRatio": 63.33,
+    "ReportDate": "2026-04-05T14:12:32.970Z"
+  },
+  {
+    "CDRatioAnalysisId": 54,
+    "OrgElementId": 6,
+    "BranchName": "Nagpur Branch",
+    "Deposits": 27000000,
+    "Loans": 21000000,
+    "CDRatio": 77.77,
+    "ReportDate": "2026-04-05T14:12:32.970Z"
+  },
+  {
+    "CDRatioAnalysisId": 53,
+    "OrgElementId": 5,
+    "BranchName": "Aurangabad Branch",
+    "Deposits": 18000000,
+    "Loans": 12000000,
+    "CDRatio": 66.67,
+    "ReportDate": "2026-04-05T14:12:32.967Z"
+  },
+  {
+    "CDRatioAnalysisId": 52,
+    "OrgElementId": 4,
+    "BranchName": "Mumbai Branch",
+    "Deposits": 55000000,
+    "Loans": 42000000,
+    "CDRatio": 76.36,
+    "ReportDate": "2026-04-05T14:12:32.963Z"
+  },
+  {
+    "CDRatioAnalysisId": 51,
+    "OrgElementId": 3,
+    "BranchName": "Pune Branch",
+    "Deposits": 38000000,
+    "Loans": 29000000,
+    "CDRatio": 76.31,
+    "ReportDate": "2026-04-05T14:12:32.960Z"
+  },
+  {
+    "CDRatioAnalysisId": 50,
+    "OrgElementId": 2,
+    "BranchName": "Nashik Branch",
+    "Deposits": 22000000,
+    "Loans": 15000000,
+    "CDRatio": 68.18,
+    "ReportDate": "2026-04-05T14:12:32.960Z"
+  },
+  {
+    "CDRatioAnalysisId": 49,
+    "OrgElementId": 1,
+    "BranchName": "Head Office",
+    "Deposits": 45000000,
+    "Loans": 38000000,
+    "CDRatio": 84.44,
+    "ReportDate": "2026-04-05T14:12:32.957Z"
+  }
+]

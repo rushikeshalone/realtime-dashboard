@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rows>
+  <Row>
+    <LogedInUserId>58</LogedInUserId>
+    <UserName>user.pune2</UserName>
+    <UserRole>USER</UserRole>
+    <BranchName>Pune Branch</BranchName>
+    <LastLoginTime>2026-04-05T14:10:33.127Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>52</LogedInUserId>
+    <UserName>user.mumbai1</UserName>
+    <UserRole>USER</UserRole>
+    <BranchName>Mumbai Branch</BranchName>
+    <LastLoginTime>2026-04-05T14:09:33.110Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>49</LogedInUserId>
+    <UserName>admin.rushikesh</UserName>
+    <UserRole>ADMIN</UserRole>
+    <BranchName>Head Office</BranchName>
+    <LastLoginTime>2026-04-05T14:07:33.100Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>55</LogedInUserId>
+    <UserName>user.nagpur1</UserName>
+    <UserRole>USER</UserRole>
+    <BranchName>Nagpur Branch</BranchName>
+    <LastLoginTime>2026-04-05T14:05:33.117Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>51</LogedInUserId>
+    <UserName>mgr.pune</UserName>
+    <UserRole>MANAGER</UserRole>
+    <BranchName>Pune Branch</BranchName>
+    <LastLoginTime>2026-04-05T14:04:33.107Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>50</LogedInUserId>
+    <UserName>mgr.nashik</UserName>
+    <UserRole>MANAGER</UserRole>
+    <BranchName>Nashik Branch</BranchName>
+    <LastLoginTime>2026-04-05T14:00:33.103Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>57</LogedInUserId>
+    <UserName>mgr.kolhapur</UserName>
+    <UserRole>MANAGER</UserRole>
+    <BranchName>Kolhapur Branch</BranchName>
+    <LastLoginTime>2026-04-05T13:57:33.123Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>53</LogedInUserId>
+    <UserName>user.mumbai2</UserName>
+    <UserRole>USER</UserRole>
+    <BranchName>Mumbai Branch</BranchName>
+    <LastLoginTime>2026-04-05T13:54:33.110Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>54</LogedInUserId>
+    <UserName>mgr.aurangabad</UserName>
+    <UserRole>MANAGER</UserRole>
+    <BranchName>Aurangabad Br.</BranchName>
+    <LastLoginTime>2026-04-05T13:47:33.113Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>60</LogedInUserId>
+    <UserName>user.sangli</UserName>
+    <UserRole>USER</UserRole>
+    <BranchName>Sangli Branch</BranchName>
+    <LastLoginTime>2026-04-05T13:42:33.137Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>56</LogedInUserId>
+    <UserName>user.solapur</UserName>
+    <UserRole>USER</UserRole>
+    <BranchName>Solapur Branch</BranchName>
+    <LastLoginTime>2026-04-05T13:32:33.120Z</LastLoginTime>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <LogedInUserId>59</LogedInUserId>
+    <UserName>mgr.satara</UserName>
+    <UserRole>MANAGER</UserRole>
+    <BranchName>Satara Branch</BranchName>
+    <LastLoginTime>2026-04-05T13:17:33.130Z</LastLoginTime>
+    <IsActive>0</IsActive>
+  </Row>
+</Rows>

@@ -1,0 +1,98 @@
+[
+  {
+    "BankPositionId": 40,
+    "ReportDate": "2026-04-05T14:12:33.060Z",
+    "OrgElementId": 8,
+    "BranchName": "Rushikesh Branch",
+    "AccountHeadId": 101,
+    "AccountHeadName": "SLR Investments",
+    "OpeningBankPosition": 3600000,
+    "CurrentBankPosition": 4100000,
+    "LiabilityPosition": 19000000,
+    "AssetPosition": 14000000
+  },
+  {
+    "BankPositionId": 39,
+    "ReportDate": "2026-04-05T14:12:33.060Z",
+    "OrgElementId": 7,
+    "BranchName": "Solapur Branch",
+    "AccountHeadId": 103,
+    "AccountHeadName": "Bank with RBI",
+    "OpeningBankPosition": 2800000,
+    "CurrentBankPosition": 3100000,
+    "LiabilityPosition": 15000000,
+    "AssetPosition": 9500000
+  },
+  {
+    "BankPositionId": 38,
+    "ReportDate": "2026-04-05T14:12:33.053Z",
+    "OrgElementId": 6,
+    "BranchName": "Nagpur Branch",
+    "AccountHeadId": 102,
+    "AccountHeadName": "Cash in Hand",
+    "OpeningBankPosition": 6200000,
+    "CurrentBankPosition": 6900000,
+    "LiabilityPosition": 27000000,
+    "AssetPosition": 21000000
+  },
+  {
+    "BankPositionId": 37,
+    "ReportDate": "2026-04-05T14:12:33.050Z",
+    "OrgElementId": 5,
+    "BranchName": "Aurangabad Br.",
+    "AccountHeadId": 101,
+    "AccountHeadName": "SLR Investments",
+    "OpeningBankPosition": 3100000,
+    "CurrentBankPosition": 3400000,
+    "LiabilityPosition": 18000000,
+    "AssetPosition": 12000000
+  },
+  {
+    "BankPositionId": 36,
+    "ReportDate": "2026-04-05T14:12:33.047Z",
+    "OrgElementId": 4,
+    "BranchName": "Mumbai Branch",
+    "AccountHeadId": 103,
+    "AccountHeadName": "Bank with RBI",
+    "OpeningBankPosition": 15200000,
+    "CurrentBankPosition": 16800000,
+    "LiabilityPosition": 55000000,
+    "AssetPosition": 42000000
+  },
+  {
+    "BankPositionId": 35,
+    "ReportDate": "2026-04-05T14:12:33.043Z",
+    "OrgElementId": 3,
+    "BranchName": "Pune Branch",
+    "AccountHeadId": 102,
+    "AccountHeadName": "Cash in Hand",
+    "OpeningBankPosition": 8400000,
+    "CurrentBankPosition": 9100000,
+    "LiabilityPosition": 38000000,
+    "AssetPosition": 29000000
+  },
+  {
+    "BankPositionId": 34,
+    "ReportDate": "2026-04-05T14:12:33.040Z",
+    "OrgElementId": 2,
+    "BranchName": "Nashik Branch",
+    "AccountHeadId": 101,
+    "AccountHeadName": "SLR Investments",
+    "OpeningBankPosition": 5200000,
+    "CurrentBankPosition": 5800000,
+    "LiabilityPosition": 22000000,
+    "AssetPosition": 15000000
+  },
+  {
+    "BankPositionId": 33,
+    "ReportDate": "2026-04-05T14:12:33.040Z",
+    "OrgElementId": 1,
+    "BranchName": "Head Office",
+    "AccountHeadId": 101,
+    "AccountHeadName": "SLR Investments",
+    "OpeningBankPosition": 12500000,
+    "CurrentBankPosition": 13200000,
+    "LiabilityPosition": 45000000,
+    "AssetPosition": 38000000
+  }
+]

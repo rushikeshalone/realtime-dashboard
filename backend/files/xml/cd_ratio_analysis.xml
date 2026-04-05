@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rows>
+  <Row>
+    <CDRatioAnalysisId>60</CDRatioAnalysisId>
+    <OrgElementId>12</OrgElementId>
+    <BranchName>Dhule Branch</BranchName>
+    <Deposits>10000000</Deposits>
+    <Loans>7200000</Loans>
+    <CDRatio>72</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.980Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>59</CDRatioAnalysisId>
+    <OrgElementId>11</OrgElementId>
+    <BranchName>Jalgaon Branch</BranchName>
+    <Deposits>14000000</Deposits>
+    <Loans>9000000</Loans>
+    <CDRatio>64.28</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.980Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>58</CDRatioAnalysisId>
+    <OrgElementId>10</OrgElementId>
+    <BranchName>Sangli Branch</BranchName>
+    <Deposits>16000000</Deposits>
+    <Loans>11500000</Loans>
+    <CDRatio>71.87</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.977Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>57</CDRatioAnalysisId>
+    <OrgElementId>9</OrgElementId>
+    <BranchName>Satara Branch</BranchName>
+    <Deposits>12000000</Deposits>
+    <Loans>8000000</Loans>
+    <CDRatio>66.67</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.977Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>56</CDRatioAnalysisId>
+    <OrgElementId>8</OrgElementId>
+    <BranchName>Kolhapur Branch</BranchName>
+    <Deposits>19000000</Deposits>
+    <Loans>14000000</Loans>
+    <CDRatio>73.68</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.973Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>55</CDRatioAnalysisId>
+    <OrgElementId>7</OrgElementId>
+    <BranchName>Solapur Branch</BranchName>
+    <Deposits>15000000</Deposits>
+    <Loans>9500000</Loans>
+    <CDRatio>63.33</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.970Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>54</CDRatioAnalysisId>
+    <OrgElementId>6</OrgElementId>
+    <BranchName>Nagpur Branch</BranchName>
+    <Deposits>27000000</Deposits>
+    <Loans>21000000</Loans>
+    <CDRatio>77.77</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.970Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>53</CDRatioAnalysisId>
+    <OrgElementId>5</OrgElementId>
+    <BranchName>Aurangabad Branch</BranchName>
+    <Deposits>18000000</Deposits>
+    <Loans>12000000</Loans>
+    <CDRatio>66.67</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.967Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>52</CDRatioAnalysisId>
+    <OrgElementId>4</OrgElementId>
+    <BranchName>Mumbai Branch</BranchName>
+    <Deposits>55000000</Deposits>
+    <Loans>42000000</Loans>
+    <CDRatio>76.36</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.963Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>51</CDRatioAnalysisId>
+    <OrgElementId>3</OrgElementId>
+    <BranchName>Pune Branch</BranchName>
+    <Deposits>38000000</Deposits>
+    <Loans>29000000</Loans>
+    <CDRatio>76.31</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.960Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>50</CDRatioAnalysisId>
+    <OrgElementId>2</OrgElementId>
+    <BranchName>Nashik Branch</BranchName>
+    <Deposits>22000000</Deposits>
+    <Loans>15000000</Loans>
+    <CDRatio>68.18</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.960Z</ReportDate>
+  </Row>
+  <Row>
+    <CDRatioAnalysisId>49</CDRatioAnalysisId>
+    <OrgElementId>1</OrgElementId>
+    <BranchName>Head Office</BranchName>
+    <Deposits>45000000</Deposits>
+    <Loans>38000000</Loans>
+    <CDRatio>84.44</CDRatio>
+    <ReportDate>2026-04-05T14:12:32.957Z</ReportDate>
+  </Row>
+</Rows>

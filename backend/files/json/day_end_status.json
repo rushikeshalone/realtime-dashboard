@@ -1,0 +1,134 @@
+[
+  {
+    "Dashboard_DayEndStatusId": 49,
+    "OrgElementId": 1,
+    "BranchName": "Head Office",
+    "LastDayEndDate": "2026-04-04T14:12:33.143Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T20:12:33.143Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T04:12:33.143Z",
+    "CurrentDate": "2026-04-05T14:12:33.143Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 50,
+    "OrgElementId": 2,
+    "BranchName": "Nashik Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.150Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T21:12:33.150Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T05:12:33.150Z",
+    "CurrentDate": "2026-04-05T14:12:33.150Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 51,
+    "OrgElementId": 3,
+    "BranchName": "Pune Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.157Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T20:12:33.157Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T04:12:33.157Z",
+    "CurrentDate": "2026-04-05T14:12:33.157Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 52,
+    "OrgElementId": 4,
+    "BranchName": "Mumbai Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.160Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T22:12:33.160Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T05:12:33.160Z",
+    "CurrentDate": "2026-04-05T14:12:33.160Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 53,
+    "OrgElementId": 5,
+    "BranchName": "Aurangabad Br.",
+    "LastDayEndDate": "2026-04-04T14:12:33.167Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T21:12:33.167Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T04:12:33.167Z",
+    "CurrentDate": "2026-04-05T14:12:33.167Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 54,
+    "OrgElementId": 6,
+    "BranchName": "Nagpur Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.170Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T20:12:33.170Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T05:12:33.170Z",
+    "CurrentDate": "2026-04-05T14:12:33.170Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 55,
+    "OrgElementId": 7,
+    "BranchName": "Solapur Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.173Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T21:12:33.173Z",
+    "DayBeginBy": null,
+    "DayBeginAt": null,
+    "CurrentDate": "2026-04-05T14:12:33.173Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 56,
+    "OrgElementId": 8,
+    "BranchName": "Kolhapur Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.180Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T20:12:33.180Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T04:12:33.180Z",
+    "CurrentDate": "2026-04-05T14:12:33.180Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 57,
+    "OrgElementId": 9,
+    "BranchName": "Satara Branch",
+    "LastDayEndDate": "2026-04-03T14:12:33.183Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-03T20:12:33.183Z",
+    "DayBeginBy": null,
+    "DayBeginAt": null,
+    "CurrentDate": "2026-04-05T14:12:33.183Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 58,
+    "OrgElementId": 10,
+    "BranchName": "Sangli Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.187Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T21:12:33.187Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T05:12:33.187Z",
+    "CurrentDate": "2026-04-05T14:12:33.187Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 59,
+    "OrgElementId": 11,
+    "BranchName": "Jalgaon Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.190Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T20:12:33.190Z",
+    "DayBeginBy": "auto.system",
+    "DayBeginAt": "2026-04-05T05:12:33.190Z",
+    "CurrentDate": "2026-04-05T14:12:33.190Z"
+  },
+  {
+    "Dashboard_DayEndStatusId": 60,
+    "OrgElementId": 12,
+    "BranchName": "Dhule Branch",
+    "LastDayEndDate": "2026-04-04T14:12:33.193Z",
+    "DayEndDoneBy": "auto.system",
+    "DayEndDoneAt": "2026-04-04T21:12:33.193Z",
+    "DayBeginBy": null,
+    "DayBeginAt": null,
+    "CurrentDate": "2026-04-05T14:12:33.193Z"
+  }
+]

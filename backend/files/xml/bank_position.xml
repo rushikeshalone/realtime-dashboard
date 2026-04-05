@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rows>
+  <Row>
+    <BankPositionId>40</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.060Z</ReportDate>
+    <OrgElementId>8</OrgElementId>
+    <BranchName>Kolhapur Branch</BranchName>
+    <AccountHeadId>101</AccountHeadId>
+    <AccountHeadName>SLR Investments</AccountHeadName>
+    <OpeningBankPosition>3600000</OpeningBankPosition>
+    <CurrentBankPosition>4100000</CurrentBankPosition>
+    <LiabilityPosition>19000000</LiabilityPosition>
+    <AssetPosition>14000000</AssetPosition>
+  </Row>
+  <Row>
+    <BankPositionId>39</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.060Z</ReportDate>
+    <OrgElementId>7</OrgElementId>
+    <BranchName>Solapur Branch</BranchName>
+    <AccountHeadId>103</AccountHeadId>
+    <AccountHeadName>Bank with RBI</AccountHeadName>
+    <OpeningBankPosition>2800000</OpeningBankPosition>
+    <CurrentBankPosition>3100000</CurrentBankPosition>
+    <LiabilityPosition>15000000</LiabilityPosition>
+    <AssetPosition>9500000</AssetPosition>
+  </Row>
+  <Row>
+    <BankPositionId>38</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.053Z</ReportDate>
+    <OrgElementId>6</OrgElementId>
+    <BranchName>Nagpur Branch</BranchName>
+    <AccountHeadId>102</AccountHeadId>
+    <AccountHeadName>Cash in Hand</AccountHeadName>
+    <OpeningBankPosition>6200000</OpeningBankPosition>
+    <CurrentBankPosition>6900000</CurrentBankPosition>
+    <LiabilityPosition>27000000</LiabilityPosition>
+    <AssetPosition>21000000</AssetPosition>
+  </Row>
+  <Row>
+    <BankPositionId>37</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.050Z</ReportDate>
+    <OrgElementId>5</OrgElementId>
+    <BranchName>Aurangabad Br.</BranchName>
+    <AccountHeadId>101</AccountHeadId>
+    <AccountHeadName>SLR Investments</AccountHeadName>
+    <OpeningBankPosition>3100000</OpeningBankPosition>
+    <CurrentBankPosition>3400000</CurrentBankPosition>
+    <LiabilityPosition>18000000</LiabilityPosition>
+    <AssetPosition>12000000</AssetPosition>
+  </Row>
+  <Row>
+    <BankPositionId>36</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.047Z</ReportDate>
+    <OrgElementId>4</OrgElementId>
+    <BranchName>Mumbai Branch</BranchName>
+    <AccountHeadId>103</AccountHeadId>
+    <AccountHeadName>Bank with RBI</AccountHeadName>
+    <OpeningBankPosition>15200000</OpeningBankPosition>
+    <CurrentBankPosition>16800000</CurrentBankPosition>
+    <LiabilityPosition>55000000</LiabilityPosition>
+    <AssetPosition>42000000</AssetPosition>
+  </Row>
+  <Row>
+    <BankPositionId>35</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.043Z</ReportDate>
+    <OrgElementId>3</OrgElementId>
+    <BranchName>Pune Branch</BranchName>
+    <AccountHeadId>102</AccountHeadId>
+    <AccountHeadName>Cash in Hand</AccountHeadName>
+    <OpeningBankPosition>8400000</OpeningBankPosition>
+    <CurrentBankPosition>9100000</CurrentBankPosition>
+    <LiabilityPosition>38000000</LiabilityPosition>
+    <AssetPosition>29000000</AssetPosition>
+  </Row>
+  <Row>
+    <BankPositionId>34</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.040Z</ReportDate>
+    <OrgElementId>2</OrgElementId>
+    <BranchName>Nashik Branch</BranchName>
+    <AccountHeadId>101</AccountHeadId>
+    <AccountHeadName>SLR Investments</AccountHeadName>
+    <OpeningBankPosition>5200000</OpeningBankPosition>
+    <CurrentBankPosition>5800000</CurrentBankPosition>
+    <LiabilityPosition>22000000</LiabilityPosition>
+    <AssetPosition>15000000</AssetPosition>
+  </Row>
+  <Row>
+    <BankPositionId>33</BankPositionId>
+    <ReportDate>2026-04-05T14:12:33.040Z</ReportDate>
+    <OrgElementId>1</OrgElementId>
+    <BranchName>Head Office</BranchName>
+    <AccountHeadId>101</AccountHeadId>
+    <AccountHeadName>SLR Investments</AccountHeadName>
+    <OpeningBankPosition>12500000</OpeningBankPosition>
+    <CurrentBankPosition>13200000</CurrentBankPosition>
+    <LiabilityPosition>45000000</LiabilityPosition>
+    <AssetPosition>38000000</AssetPosition>
+  </Row>
+</Rows>

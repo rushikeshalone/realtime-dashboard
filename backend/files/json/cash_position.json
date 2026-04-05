@@ -1,0 +1,134 @@
+[
+  {
+    "CashPositionId": 60,
+    "ReportDate": "2026-04-05T14:12:33.090Z",
+    "OrgElementId": 12,
+    "BranchName": "Dhule Branch",
+    "OpeningCashPosition": 10000,
+    "CurrentCashPosition": 15000,
+    "DepositPosition": 5000,
+    "WithdrawlPosition": 2000,
+    "TotalCashPosition": 13000
+  },
+  {
+    "CashPositionId": 59,
+    "ReportDate": "2026-04-05T14:12:33.090Z",
+    "OrgElementId": 11,
+    "BranchName": "Jalgaon Branch",
+    "OpeningCashPosition": 840000,
+    "CurrentCashPosition": 990000,
+    "DepositPosition": 410000,
+    "WithdrawlPosition": 260000,
+    "TotalCashPosition": 990000
+  },
+  {
+    "CashPositionId": 58,
+    "ReportDate": "2026-04-05T14:12:33.087Z",
+    "OrgElementId": 10,
+    "BranchName": "Sangli Branch",
+    "OpeningCashPosition": 1050000,
+    "CurrentCashPosition": 1280000,
+    "DepositPosition": 520000,
+    "WithdrawlPosition": 290000,
+    "TotalCashPosition": 1280000
+  },
+  {
+    "CashPositionId": 57,
+    "ReportDate": "2026-04-05T14:12:33.083Z",
+    "OrgElementId": 9,
+    "BranchName": "Satara Branch",
+    "OpeningCashPosition": 780000,
+    "CurrentCashPosition": 920000,
+    "DepositPosition": 380000,
+    "WithdrawlPosition": 240000,
+    "TotalCashPosition": 920000
+  },
+  {
+    "CashPositionId": 56,
+    "ReportDate": "2026-04-05T14:12:33.083Z",
+    "OrgElementId": 8,
+    "BranchName": "Kolhapur Branch",
+    "OpeningCashPosition": 1350000,
+    "CurrentCashPosition": 1600000,
+    "DepositPosition": 590000,
+    "WithdrawlPosition": 340000,
+    "TotalCashPosition": 1600000
+  },
+  {
+    "CashPositionId": 55,
+    "ReportDate": "2026-04-05T14:12:33.080Z",
+    "OrgElementId": 7,
+    "BranchName": "Solapur Branch",
+    "OpeningCashPosition": 950000,
+    "CurrentCashPosition": 1150000,
+    "DepositPosition": 430000,
+    "WithdrawlPosition": 230000,
+    "TotalCashPosition": 1150000
+  },
+  {
+    "CashPositionId": 54,
+    "ReportDate": "2026-04-05T14:12:33.077Z",
+    "OrgElementId": 6,
+    "BranchName": "Nagpur Branch",
+    "OpeningCashPosition": 2100000,
+    "CurrentCashPosition": 2550000,
+    "DepositPosition": 980000,
+    "WithdrawlPosition": 530000,
+    "TotalCashPosition": 2550000
+  },
+  {
+    "CashPositionId": 53,
+    "ReportDate": "2026-04-05T14:12:33.077Z",
+    "OrgElementId": 5,
+    "BranchName": "Aurangabad Br.",
+    "OpeningCashPosition": 1200000,
+    "CurrentCashPosition": 1450000,
+    "DepositPosition": 620000,
+    "WithdrawlPosition": 370000,
+    "TotalCashPosition": 1450000
+  },
+  {
+    "CashPositionId": 52,
+    "ReportDate": "2026-04-05T14:12:33.073Z",
+    "OrgElementId": 4,
+    "BranchName": "Mumbai Branch",
+    "OpeningCashPosition": 6500000,
+    "CurrentCashPosition": 7200000,
+    "DepositPosition": 2800000,
+    "WithdrawlPosition": 2100000,
+    "TotalCashPosition": 7200000
+  },
+  {
+    "CashPositionId": 51,
+    "ReportDate": "2026-04-05T14:12:33.070Z",
+    "OrgElementId": 3,
+    "BranchName": "Pune Branch",
+    "OpeningCashPosition": 3100000,
+    "CurrentCashPosition": 3700000,
+    "DepositPosition": 1200000,
+    "WithdrawlPosition": 600000,
+    "TotalCashPosition": 3700000
+  },
+  {
+    "CashPositionId": 50,
+    "ReportDate": "2026-04-05T14:12:33.070Z",
+    "OrgElementId": 2,
+    "BranchName": "Nashik Branch",
+    "OpeningCashPosition": 1800000,
+    "CurrentCashPosition": 2100000,
+    "DepositPosition": 850000,
+    "WithdrawlPosition": 550000,
+    "TotalCashPosition": 2100000
+  },
+  {
+    "CashPositionId": 49,
+    "ReportDate": "2026-04-05T14:12:33.067Z",
+    "OrgElementId": 1,
+    "BranchName": "Head Office",
+    "OpeningCashPosition": 5200000,
+    "CurrentCashPosition": 6100000,
+    "DepositPosition": 2500000,
+    "WithdrawlPosition": 1600000,
+    "TotalCashPosition": 6100000
+  }
+]

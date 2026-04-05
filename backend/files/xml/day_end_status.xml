@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rows>
+  <Row>
+    <Dashboard_DayEndStatusId>49</Dashboard_DayEndStatusId>
+    <OrgElementId>1</OrgElementId>
+    <BranchName>Head Office</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.143Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T20:12:33.143Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T04:12:33.143Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.143Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>50</Dashboard_DayEndStatusId>
+    <OrgElementId>2</OrgElementId>
+    <BranchName>Nashik Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.150Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T21:12:33.150Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T05:12:33.150Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.150Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>51</Dashboard_DayEndStatusId>
+    <OrgElementId>3</OrgElementId>
+    <BranchName>Pune Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.157Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T20:12:33.157Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T04:12:33.157Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.157Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>52</Dashboard_DayEndStatusId>
+    <OrgElementId>4</OrgElementId>
+    <BranchName>Mumbai Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.160Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T22:12:33.160Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T05:12:33.160Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.160Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>53</Dashboard_DayEndStatusId>
+    <OrgElementId>5</OrgElementId>
+    <BranchName>Aurangabad Br.</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.167Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T21:12:33.167Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T04:12:33.167Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.167Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>54</Dashboard_DayEndStatusId>
+    <OrgElementId>6</OrgElementId>
+    <BranchName>Nagpur Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.170Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T20:12:33.170Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T05:12:33.170Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.170Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>55</Dashboard_DayEndStatusId>
+    <OrgElementId>7</OrgElementId>
+    <BranchName>Solapur Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.173Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T21:12:33.173Z</DayEndDoneAt>
+    <DayBeginBy/>
+    <DayBeginAt/>
+    <CurrentDate>2026-04-05T14:12:33.173Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>56</Dashboard_DayEndStatusId>
+    <OrgElementId>8</OrgElementId>
+    <BranchName>Kolhapur Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.180Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T20:12:33.180Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T04:12:33.180Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.180Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>57</Dashboard_DayEndStatusId>
+    <OrgElementId>9</OrgElementId>
+    <BranchName>Satara Branch</BranchName>
+    <LastDayEndDate>2026-04-03T14:12:33.183Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-03T20:12:33.183Z</DayEndDoneAt>
+    <DayBeginBy/>
+    <DayBeginAt/>
+    <CurrentDate>2026-04-05T14:12:33.183Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>58</Dashboard_DayEndStatusId>
+    <OrgElementId>10</OrgElementId>
+    <BranchName>Sangli Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.187Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T21:12:33.187Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T05:12:33.187Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.187Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>59</Dashboard_DayEndStatusId>
+    <OrgElementId>11</OrgElementId>
+    <BranchName>Jalgaon Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.190Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T20:12:33.190Z</DayEndDoneAt>
+    <DayBeginBy>auto.system</DayBeginBy>
+    <DayBeginAt>2026-04-05T05:12:33.190Z</DayBeginAt>
+    <CurrentDate>2026-04-05T14:12:33.190Z</CurrentDate>
+  </Row>
+  <Row>
+    <Dashboard_DayEndStatusId>60</Dashboard_DayEndStatusId>
+    <OrgElementId>12</OrgElementId>
+    <BranchName>Dhule Branch</BranchName>
+    <LastDayEndDate>2026-04-04T14:12:33.193Z</LastDayEndDate>
+    <DayEndDoneBy>auto.system</DayEndDoneBy>
+    <DayEndDoneAt>2026-04-04T21:12:33.193Z</DayEndDoneAt>
+    <DayBeginBy/>
+    <DayBeginAt/>
+    <CurrentDate>2026-04-05T14:12:33.193Z</CurrentDate>
+  </Row>
+</Rows>

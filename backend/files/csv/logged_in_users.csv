@@ -1,0 +1,13 @@
+LogedInUserId,UserName,UserRole,BranchName,LastLoginTime,IsActive
+58,user.pune2,USER,Pune Branch,2026-04-05T14:10:33.127Z,1
+52,user.mumbai1,USER,Mumbai Branch,2026-04-05T14:09:33.110Z,1
+49,admin.rushikesh,ADMIN,Head Office,2026-04-05T14:07:33.100Z,1
+55,user.nagpur1,USER,Nagpur Branch,2026-04-05T14:05:33.117Z,1
+51,mgr.pune,MANAGER,Pune Branch,2026-04-05T14:04:33.107Z,1
+50,mgr.nashik,MANAGER,Nashik Branch,2026-04-05T14:00:33.103Z,1
+57,mgr.kolhapur,MANAGER,Kolhapur Branch,2026-04-05T13:57:33.123Z,1
+53,user.mumbai2,USER,Mumbai Branch,2026-04-05T13:54:33.110Z,1
+54,mgr.aurangabad,MANAGER,Aurangabad Br.,2026-04-05T13:47:33.113Z,1
+60,user.sangli,USER,Sangli Branch,2026-04-05T13:42:33.137Z,1
+56,user.solapur,USER,Solapur Branch,2026-04-05T13:32:33.120Z,1
+59,mgr.satara,MANAGER,Satara Branch,2026-04-05T13:17:33.130Z,0

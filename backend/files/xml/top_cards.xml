@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rows>
+  <Row>
+    <TopCardsId>33</TopCardsId>
+    <Particular>Total Deposits</Particular>
+    <Value>5</Value>
+    <DataType>CURRENCY</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <TopCardsId>34</TopCardsId>
+    <Particular>Total Loans</Particular>
+    <Value>2</Value>
+    <DataType>CURRENCY</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <TopCardsId>35</TopCardsId>
+    <Particular>CD Ratio</Particular>
+    <Value>74.12%</Value>
+    <DataType>PERCENT</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <TopCardsId>36</TopCardsId>
+    <Particular>Total Branches</Particular>
+    <Value>12</Value>
+    <DataType>NUMBER</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <TopCardsId>37</TopCardsId>
+    <Particular>Active Customers</Particular>
+    <Value>8,342</Value>
+    <DataType>NUMBER</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <TopCardsId>38</TopCardsId>
+    <Particular>NPA %</Particular>
+    <Value>2.34%</Value>
+    <DataType>PERCENT</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <TopCardsId>39</TopCardsId>
+    <Particular>Profit This Month</Particular>
+    <Value>?12,45,000</Value>
+    <DataType>CURRENCY</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+  <Row>
+    <TopCardsId>40</TopCardsId>
+    <Particular>Pending Clearance</Particular>
+    <Value>?3,21,500</Value>
+    <DataType>CURRENCY</DataType>
+    <IsActive>1</IsActive>
+  </Row>
+</Rows>

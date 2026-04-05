@@ -1,0 +1,9 @@
+TopCardsId,Particular,Value,DataType,IsActive
+33,Total Deposits,5,CURRENCY,1
+34,Total Loans,2,CURRENCY,1
+35,CD Ratio,74.12%,PERCENT,1
+36,Total Branches,12,NUMBER,1
+37,Active Customers,"8,342",NUMBER,1
+38,NPA %,2.34%,PERCENT,1
+39,Profit This Month,"?12,45,000",CURRENCY,1
+40,Pending Clearance,"?3,21,500",CURRENCY,1

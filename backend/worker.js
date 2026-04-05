@@ -1,5 +1,67 @@
 const { query } = require('./db');
 const { getCache, setCache, publish } = require('./redis');
+const fs = require('fs');
+const path = require('path');
+const csv = require('csv-parser');
+const xlsx = require('xlsx');
+const xml2js = require('xml2js');
+
+const readSourceConfig = () => {
+  try {
+    const p = path.join(__dirname, 'files', 'config', 'datasource.txt');
+    const content = fs.readFileSync(p, 'utf8');
+    const src = content.split('\n')[0].trim().toUpperCase();
+    return ['SQL', 'JSON', 'CSV', 'XML', 'EXCEL'].includes(src) ? src : 'SQL';
+  } catch (err) {
+    return 'SQL';
+  }
+};
+
+const fetchData = async (channel, sqlFetcher) => {
+  const source = readSourceConfig();
+  if (source === 'SQL') {
+    return await sqlFetcher();
+  }
+  
+  const baseFile = path.join(__dirname, 'files', source.toLowerCase(), channel);
+  
+  try {
+    if (source === 'JSON') {
+      const data = fs.readFileSync(`${baseFile}.json`, 'utf8');
+      return JSON.parse(data);
+    } 
+    else if (source === 'EXCEL') {
+      const wb = xlsx.readFile(`${baseFile}.xlsx`);
+      return xlsx.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+    } 
+    else if (source === 'XML') {
+      const data = fs.readFileSync(`${baseFile}.xml`, 'utf8');
+      const parser = new xml2js.Parser({ explicitArray: false });
+      const result = await parser.parseStringPromise(data);
+      let rows = result?.Rows?.Row || [];
+      if (!Array.isArray(rows)) rows = [rows];
+      // Convert nested text objects back to shallow properties if needed
+      return rows.map(r => {
+        const nr = {};
+        for (let k in r) nr[k] = typeof r[k] === 'object' && r[k]._ ? r[k]._ : r[k];
+        return nr;
+      });
+    } 
+    else if (source === 'CSV') {
+      return new Promise((resolve, reject) => {
+        const results = [];
+        fs.createReadStream(`${baseFile}.csv`)
+          .pipe(csv())
+          .on('data', (d) => results.push(d))
+          .on('end', () => resolve(results))
+          .on('error', reject);
+      });
+    }
+  } catch (err) {
+    console.error(`⚠️ Error reading ${source} file for ${channel}:`, err.message);
+  }
+  return [];
+};
 
 // ============================================================
 // QUERY FUNCTIONS — each returns latest data from SQL Server
@@ -170,20 +232,19 @@ const pollAll = async () => {
   const results = {};
   await Promise.all(
     Object.entries(CHANNELS).map(async ([key, channel]) => {
-      const data = await pollAndPublish(channel, FETCHERS[channel]);
+      const data = await pollAndPublish(channel, () => fetchData(channel, FETCHERS[channel]));
       if (data) results[channel] = data;
     })
   );
   return results;
 };
 
-// Fetch all data at once for initial load (cached)
 const fetchAllCached = async () => {
   const results = {};
   await Promise.all(
     Object.entries(CHANNELS).map(async ([key, channel]) => {
       try {
-        const data = await FETCHERS[channel]();
+        const data = await fetchData(channel, FETCHERS[channel]);
         results[channel] = data;
       } catch (err) {
         results[channel] = [];
@@ -193,4 +254,4 @@ const fetchAllCached = async () => {
   return results;
 };
 
-module.exports = { pollAll, fetchAllCached, CHANNELS, FETCHERS };
+module.exports = { pollAll, fetchAllCached, CHANNELS, FETCHERS, fetchData };

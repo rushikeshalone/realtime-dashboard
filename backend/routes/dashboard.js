@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { query, sql } = require('../db');
+const { query } = require('../db');
 const { getCache, setCache } = require('../redis');
+const { CHANNELS, FETCHERS, fetchData } = require('../worker');
 
 // Helper: get cached or fetch fresh
 const cachedQuery = async (key, fetchFn, ttl = 15) => {
@@ -16,14 +17,14 @@ const cachedQuery = async (key, fetchFn, ttl = 15) => {
 router.get('/summary', async (req, res) => {
   try {
     const [topCards, cdRatio, liveTransactions, bankPosition, cashPosition, loggedInUsers, dayEndStatus, alerts] = await Promise.all([
-      cachedQuery('dash:top_cards', async () => (await query('SELECT * FROM Dashboard_TopCards WHERE IsActive=1')).recordset),
-      cachedQuery('dash:cd_ratio_analysis', async () => (await query('SELECT TOP 50 * FROM Dashboard_CDRatioAnalysis ORDER BY ReportDate DESC')).recordset),
-      cachedQuery('dash:live_transactions', async () => (await query('SELECT TOP 100 * FROM Dashboard_LiveTransactions ORDER BY TransactionDate DESC')).recordset),
-      cachedQuery('dash:bank_position', async () => (await query('SELECT TOP 50 * FROM Dashboard_BankPosition ORDER BY ReportDate DESC')).recordset),
-      cachedQuery('dash:cash_position', async () => (await query('SELECT TOP 50 * FROM Dashboard_CashPosition ORDER BY ReportDate DESC')).recordset),
-      cachedQuery('dash:logged_in_users', async () => (await query('SELECT * FROM Dashboard_LogedInUser ORDER BY LastLoginTime DESC')).recordset),
-      cachedQuery('dash:day_end_status', async () => (await query('SELECT * FROM Dashboard_DayEndStatus ORDER BY OrgElementId')).recordset),
-      cachedQuery('dash:alerts', async () => (await query("SELECT * FROM Dashboard_AlertConfiguration WHERE IsActive=1 AND (StartDate IS NULL OR StartDate<=CAST(GETDATE() AS DATE)) AND (EndDate IS NULL OR EndDate>=CAST(GETDATE() AS DATE)) ORDER BY Priority ASC")).recordset),
+      cachedQuery('dash:top_cards', () => fetchData(CHANNELS.TOP_CARDS, FETCHERS[CHANNELS.TOP_CARDS])),
+      cachedQuery('dash:cd_ratio_analysis', () => fetchData(CHANNELS.CD_RATIO, FETCHERS[CHANNELS.CD_RATIO])),
+      cachedQuery('dash:live_transactions', () => fetchData(CHANNELS.LIVE_TRANSACTIONS, FETCHERS[CHANNELS.LIVE_TRANSACTIONS])),
+      cachedQuery('dash:bank_position', () => fetchData(CHANNELS.BANK_POSITION, FETCHERS[CHANNELS.BANK_POSITION])),
+      cachedQuery('dash:cash_position', () => fetchData(CHANNELS.CASH_POSITION, FETCHERS[CHANNELS.CASH_POSITION])),
+      cachedQuery('dash:logged_in_users', () => fetchData(CHANNELS.LOGGED_IN_USERS, FETCHERS[CHANNELS.LOGGED_IN_USERS])),
+      cachedQuery('dash:day_end_status', () => fetchData(CHANNELS.DAY_END_STATUS, FETCHERS[CHANNELS.DAY_END_STATUS])),
+      cachedQuery('dash:alerts', () => fetchData(CHANNELS.ALERTS, FETCHERS[CHANNELS.ALERTS]))
     ]);
 
     res.json({ topCards, cdRatio, liveTransactions, bankPosition, cashPosition, loggedInUsers, dayEndStatus, alerts });
@@ -36,9 +37,7 @@ router.get('/summary', async (req, res) => {
 // GET /api/dashboard/top-cards
 router.get('/top-cards', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:top_cards', async () =>
-      (await query('SELECT * FROM Dashboard_TopCards WHERE IsActive=1 ORDER BY TopCardsId')).recordset
-    );
+    const data = await cachedQuery('dash:top_cards', () => fetchData(CHANNELS.TOP_CARDS, FETCHERS[CHANNELS.TOP_CARDS]));
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -48,9 +47,7 @@ router.get('/top-cards', async (req, res) => {
 // GET /api/dashboard/cd-ratio
 router.get('/cd-ratio', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:cd_ratio_analysis', async () =>
-      (await query('SELECT TOP 50 * FROM Dashboard_CDRatioAnalysis ORDER BY ReportDate DESC')).recordset
-    );
+    const data = await cachedQuery('dash:cd_ratio_analysis', () => fetchData(CHANNELS.CD_RATIO, FETCHERS[CHANNELS.CD_RATIO]));
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -60,9 +57,7 @@ router.get('/cd-ratio', async (req, res) => {
 // GET /api/dashboard/live-transactions
 router.get('/live-transactions', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:live_transactions', async () =>
-      (await query('SELECT TOP 100 * FROM Dashboard_LiveTransactions ORDER BY TransactionDate DESC')).recordset, 5
-    );
+    const data = await cachedQuery('dash:live_transactions', () => fetchData(CHANNELS.LIVE_TRANSACTIONS, FETCHERS[CHANNELS.LIVE_TRANSACTIONS]), 5);
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -72,9 +67,7 @@ router.get('/live-transactions', async (req, res) => {
 // GET /api/dashboard/bank-position
 router.get('/bank-position', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:bank_position', async () =>
-      (await query('SELECT TOP 50 * FROM Dashboard_BankPosition ORDER BY ReportDate DESC')).recordset
-    );
+    const data = await cachedQuery('dash:bank_position', () => fetchData(CHANNELS.BANK_POSITION, FETCHERS[CHANNELS.BANK_POSITION]));
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -84,9 +77,7 @@ router.get('/bank-position', async (req, res) => {
 // GET /api/dashboard/cash-position
 router.get('/cash-position', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:cash_position', async () =>
-      (await query('SELECT TOP 50 * FROM Dashboard_CashPosition ORDER BY ReportDate DESC')).recordset
-    );
+    const data = await cachedQuery('dash:cash_position', () => fetchData(CHANNELS.CASH_POSITION, FETCHERS[CHANNELS.CASH_POSITION]));
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -96,9 +87,7 @@ router.get('/cash-position', async (req, res) => {
 // GET /api/dashboard/logged-in-users
 router.get('/logged-in-users', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:logged_in_users', async () =>
-      (await query('SELECT * FROM Dashboard_LogedInUser ORDER BY LastLoginTime DESC')).recordset, 5
-    );
+    const data = await cachedQuery('dash:logged_in_users', () => fetchData(CHANNELS.LOGGED_IN_USERS, FETCHERS[CHANNELS.LOGGED_IN_USERS]), 5);
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -108,9 +97,7 @@ router.get('/logged-in-users', async (req, res) => {
 // GET /api/dashboard/day-end-status
 router.get('/day-end-status', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:day_end_status', async () =>
-      (await query('SELECT * FROM Dashboard_DayEndStatus ORDER BY OrgElementId')).recordset
-    );
+    const data = await cachedQuery('dash:day_end_status', () => fetchData(CHANNELS.DAY_END_STATUS, FETCHERS[CHANNELS.DAY_END_STATUS]));
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -120,9 +107,7 @@ router.get('/day-end-status', async (req, res) => {
 // GET /api/dashboard/alerts
 router.get('/alerts', async (req, res) => {
   try {
-    const data = await cachedQuery('dash:alerts', async () =>
-      (await query("SELECT * FROM Dashboard_AlertConfiguration WHERE IsActive=1 AND (StartDate IS NULL OR StartDate<=CAST(GETDATE() AS DATE)) AND (EndDate IS NULL OR EndDate>=CAST(GETDATE() AS DATE)) ORDER BY Priority ASC")).recordset, 30
-    );
+    const data = await cachedQuery('dash:alerts', () => fetchData(CHANNELS.ALERTS, FETCHERS[CHANNELS.ALERTS]), 30);
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });

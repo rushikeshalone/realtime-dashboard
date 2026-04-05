@@ -1,0 +1,58 @@
+[
+  {
+    "TopCardsId": 33,
+    "Particular": "Total Deposits",
+    "Value": "4444444444",
+    "DataType": "CURRENCY",
+    "IsActive": 1
+  },
+  {
+    "TopCardsId": 34,
+    "Particular": "Total Loans",
+    "Value": "2",
+    "DataType": "CURRENCY",
+    "IsActive": 1
+  },
+  {
+    "TopCardsId": 35,
+    "Particular": "CD Ratio",
+    "Value": "74.12%",
+    "DataType": "PERCENT",
+    "IsActive": 1
+  },
+  {
+    "TopCardsId": 36,
+    "Particular": "Total Branches",
+    "Value": "12",
+    "DataType": "NUMBER",
+    "IsActive": 1
+  },
+  {
+    "TopCardsId": 37,
+    "Particular": "Active Customers",
+    "Value": "8,342",
+    "DataType": "NUMBER",
+    "IsActive": 1
+  },
+  {
+    "TopCardsId": 38,
+    "Particular": "NPA %",
+    "Value": "2.34%",
+    "DataType": "PERCENT",
+    "IsActive": 1
+  },
+  {
+    "TopCardsId": 39,
+    "Particular": "Profit This Month",
+    "Value": "?12,45,000",
+    "DataType": "CURRENCY",
+    "IsActive": 1
+  },
+  {
+    "TopCardsId": 40,
+    "Particular": "Pending Clearance",
+    "Value": "?3,21,500",
+    "DataType": "CURRENCY",
+    "IsActive": 1
+  }
+]
