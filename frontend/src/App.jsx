@@ -96,8 +96,10 @@ function TopCards({ cards }) {
           <div className="metric-card-icon" style={{ background: gradients[card.Particular] || 'var(--gradient-blue)' }}>
             {icons[card.Particular] || '📊'}
           </div>
-          <div className="metric-card-label">{card.Particular}</div>
-          <div className="metric-card-value">{formatValue(card)}</div>
+          <div className="metric-card-content">
+            <div className="metric-card-label">{card.Particular}</div>
+            <div className="metric-card-value">{formatValue(card)}</div>
+          </div>
         </div>
       ))}
     </div>

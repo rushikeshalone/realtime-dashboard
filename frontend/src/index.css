@@ -58,12 +58,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: var(--font-main);
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  overflow-x: hidden;
-  line-height: 1.6;
+  @apply font-sans bg-dark-900 text-slate-200 h-screen overflow-hidden leading-snug;
 }
 
 /* Scrollbar */
@@ -76,24 +71,11 @@ body {
    LAYOUT
    ============================================================ */
 .app-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  @apply flex flex-col h-screen overflow-hidden;
 }
 
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(10, 14, 26, 0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  @apply sticky top-0 z-50 bg-dark-900/90 backdrop-blur-md border-b border-[rgba(255,255,255,0.08)] px-4 h-12 flex items-center justify-between shrink-0;
 }
 
 .header-logo {
@@ -103,14 +85,8 @@ body {
 }
 
 .header-logo-icon {
-  width: 36px;
-  height: 36px;
+  @apply w-8 h-8 flex items-center justify-center text-[16px] rounded-lg;
   background: var(--gradient-blue);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
 }
 
 .header-title {
@@ -172,10 +148,7 @@ body {
 }
 
 .main-content {
-  flex: 1;
-  padding: 16px 24px;
-  width: 100%;
-  max-width: 100%; /* Full screen mode */
+  @apply flex-1 w-full max-w-full px-3 py-3 overflow-hidden flex flex-col gap-2;
 }
 
 /* ============================================================
@@ -223,21 +196,15 @@ body {
    TOP METRIC CARDS
    ============================================================ */
 .top-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Exactly 6 items in one line */
-  gap: 16px;
-  margin-bottom: 24px;
+  @apply grid grid-cols-6 gap-2 shrink-0;
 }
 
 .metric-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
-  transition: var(--transition);
-  cursor: default;
+  @apply bg-dark-700 border border-[rgba(255,255,255,0.08)] rounded-xl relative overflow-hidden transition-all duration-200 cursor-default;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .metric-card::before {
@@ -256,31 +223,21 @@ body {
 }
 
 .metric-card-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  margin-bottom: 12px;
-  background: var(--card-accent, var(--gradient-blue));
+  width: 32px;
+  height: 32px;
+  @apply rounded-lg flex items-center justify-center text-[16px] shrink-0;
+}
+
+.metric-card-content {
+  @apply flex flex-col justify-center overflow-hidden;
 }
 
 .metric-card-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
+  @apply text-[10px] text-slate-400 uppercase tracking-[0.5px] mb-[2px] whitespace-nowrap overflow-hidden text-ellipsis leading-tight;
 }
 
 .metric-card-value {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
+  @apply text-[18px] font-bold text-slate-200 tabular-nums leading-none;
 }
 
 .metric-card-change {
@@ -293,82 +250,52 @@ body {
    DASHBOARD CARD (Base)
    ============================================================ */
 .dashboard-section {
-  margin-bottom: 24px;
+  @apply flex-1 flex flex-col min-h-0 gap-2;
 }
 
 .section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  @apply flex items-center justify-between shrink-0;
 }
 
 .section-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  @apply text-[13px] font-semibold text-slate-400 uppercase tracking-wide;
 }
 
 .dashboard-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(580px, 1fr));
-  gap: 20px;
+  @apply grid grid-cols-3 gap-3 flex-1 min-h-0;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
+  .dashboard-cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
   .dashboard-cards-grid { grid-template-columns: 1fr; }
 }
 
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  transition: var(--transition);
-  box-shadow: var(--shadow-card);
+  @apply bg-dark-700 border border-[rgba(255,255,255,0.08)] rounded-xl overflow-hidden transition-all duration-200 shadow-xl flex flex-col;
 }
 
 .card:hover { border-color: var(--border-accent); }
 
 .card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 20px 14px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.02);
+  @apply flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.08)] bg-white/5;
 }
 
 .card-title-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @apply flex items-center gap-2;
 }
 
 .card-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  flex-shrink: 0;
+  @apply w-8 h-8 rounded-lg flex items-center justify-center text-[15px] shrink-0;
 }
 
 .card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.2;
+  @apply text-[13px] font-semibold text-slate-200 leading-tight;
 }
 
 .card-subtitle {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 2px;
+  @apply text-[10px] text-slate-400 mt-0;
 }
 
 /* View toggle tabs */
@@ -376,64 +303,38 @@ body {
   display: flex;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 3px;
+  border-radius: 6px;
+  padding: 2px;
   gap: 2px;
 }
 
 .view-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  color: var(--text-muted);
-  background: transparent;
+  @apply flex items-center gap-1 px-2 py-1 rounded-[4px] text-[10px] font-medium border-none cursor-pointer transition-colors text-slate-400 bg-transparent;
 }
 
 .view-btn.active {
-  background: var(--accent-blue);
-  color: white;
+  @apply bg-blue-500 text-white;
 }
 
 .view-btn:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-primary);
+  @apply bg-white/5 text-slate-200;
 }
 
 .card-body {
-  padding: 16px 20px;
-  min-height: 260px;
-  max-height: 380px;
-  overflow-y: auto;
+  @apply p-3 flex-1 overflow-y-auto;
+  height: 180px; /* Highly compact fixed height */
 }
 
 .card-footer {
-  padding: 10px 20px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255,255,255,0.01);
+  @apply px-4 py-[6px] border-t border-[rgba(255,255,255,0.08)] flex justify-between items-center text-[10px] bg-white/5;
 }
 
 .card-count {
-  font-size: 12px;
-  color: var(--text-muted);
+  @apply text-slate-400;
 }
 
 .updated-badge {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  @apply text-slate-400 font-mono flex items-center gap-1.5;
 }
 
 .updated-dot {
@@ -483,8 +384,8 @@ body {
   white-space: nowrap;
 }
 
-.data-table .num { font-family: var(--font-mono); font-size: 12.5px; }
-.data-table .dim { color: var(--text-muted); font-size: 12px; }
+.data-table .num { @apply font-mono text-[11.5px]; }
+.data-table .dim { @apply text-slate-400 text-[11px]; }
 
 /* ============================================================
    BADGES / PILLS
@@ -556,7 +457,7 @@ body {
    ============================================================ */
 .chart-wrapper {
   width: 100%;
-  height: 240px;
+  height: 160px; /* Reduced from 240px to fit on screen */
 }
 
 .recharts-tooltip-wrapper .recharts-default-tooltip {
