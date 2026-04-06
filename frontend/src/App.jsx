@@ -303,19 +303,25 @@ export default function App() {
     }
   }, []);
 
+  const lastConnectionState = React.useRef(false);
+
   useEffect(() => {
     const socket = getSocket();
 
     socket.on('connect', () => {
       setConnected(true);
-      setShowConnectionBanner(true);
-      setTimeout(() => setShowConnectionBanner(false), 3000);
-      toast.success('Connected to live dashboard', { duration: 2000 });
+      if (!lastConnectionState.current) {
+        toast.dismiss('conn-toast');
+        toast.success('Connected to live dashboard', { id: 'conn-toast', duration: 3000 });
+      }
+      lastConnectionState.current = true;
     });
 
     socket.on('disconnect', () => {
       setConnected(false);
-      toast.error('Disconnected — reconnecting…', { duration: 4000 });
+      lastConnectionState.current = false;
+      toast.dismiss('conn-toast');
+      toast.error('Disconnected — reconnecting…', { id: 'conn-toast', duration: 4000 });
     });
 
     socket.on('dashboard:init', ({ data, timestamp }) => {
@@ -468,14 +474,7 @@ export default function App() {
         </div>
       </main>
 
-      {/* ── Connection Banner ── */}
-      {showConnectionBanner && (
-        <div className={`connection-banner ${connected ? 'connected' : 'disconnected'}`}>
-          {connected ? '✅ Connected to live feed' : '🔌 Disconnected — reconnecting…'}
-        </div>
-      )}
-
-      {/* ── Alert Modal ── */}
+      {/* Alert Modal ── */}
       <AlertModal
         alert={activeModalAlert}
         onClose={() => {

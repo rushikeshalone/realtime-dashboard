@@ -6,6 +6,25 @@ const csv = require('csv-parser');
 const xlsx = require('xlsx');
 const xml2js = require('xml2js');
 
+const getBasePath = () => {
+  try {
+    const p = path.join(__dirname, 'files', 'config', 'path.txt');
+    if (fs.existsSync(p)) {
+      const lines = fs.readFileSync(p, 'utf8').split('\n');
+      let content = lines.find(l => l.trim() && !l.trim().startsWith('#'))?.trim();
+      if (content) {
+        // Ensure UNC paths are normalized correctly for Windows
+        content = path.win32.normalize(content);
+        console.log(`📂 Resolved data base path: ${content}`);
+        return content;
+      }
+    }
+  } catch (err) {
+    console.error('⚠️ Error reading custom path:', err.message);
+  }
+  return path.join(__dirname, 'files');
+};
+
 const readSourceConfig = () => {
   try {
     const p = path.join(__dirname, 'files', 'config', 'datasource.txt');
@@ -19,23 +38,36 @@ const readSourceConfig = () => {
 
 const fetchData = async (channel, sqlFetcher) => {
   const source = readSourceConfig();
-  if (source === 'SQL') {
-    return await sqlFetcher();
+  if (source === 'SQL') return await sqlFetcher();
+
+  let basePath = getBasePath();
+  // Use win32 explicitly and handle UNC prefix manually to avoid triple-backslash quirks
+  const isUNC = basePath.startsWith('\\\\');
+  let baseFile = path.win32.join(basePath, source.toLowerCase(), channel);
+
+  if (isUNC && !baseFile.startsWith('\\\\')) {
+    baseFile = '\\\\' + baseFile.replace(/^[\\\/]+/, '');
   }
-  
-  const baseFile = path.join(__dirname, 'files', source.toLowerCase(), channel);
-  
+  // Ensure we don't have triple slashes
+  baseFile = baseFile.replace(/^\\\\\\+/, '\\\\');
+
   try {
     if (source === 'JSON') {
-      const data = fs.readFileSync(`${baseFile}.json`, 'utf8');
+      const filePath = `${baseFile}.json`;
+      console.log(`📄 Reading JSON: ${filePath}`);
+      const data = fs.readFileSync(filePath, 'utf8');
       return JSON.parse(data);
-    } 
+    }
     else if (source === 'EXCEL') {
-      const wb = xlsx.readFile(`${baseFile}.xlsx`);
+      const filePath = `${baseFile}.xlsx`;
+      console.log(`📄 Reading EXCEL: ${filePath}`);
+      const wb = xlsx.readFile(filePath);
       return xlsx.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-    } 
+    }
     else if (source === 'XML') {
-      const data = fs.readFileSync(`${baseFile}.xml`, 'utf8');
+      const filePath = `${baseFile}.xml`;
+      console.log(`📄 Reading XML: ${filePath}`);
+      const data = fs.readFileSync(filePath, 'utf8');
       const parser = new xml2js.Parser({ explicitArray: false });
       const result = await parser.parseStringPromise(data);
       let rows = result?.Rows?.Row || [];
@@ -46,11 +78,13 @@ const fetchData = async (channel, sqlFetcher) => {
         for (let k in r) nr[k] = typeof r[k] === 'object' && r[k]._ ? r[k]._ : r[k];
         return nr;
       });
-    } 
+    }
     else if (source === 'CSV') {
+      const filePath = `${baseFile}.csv`;
+      console.log(`📄 Reading CSV: ${filePath}`);
       return new Promise((resolve, reject) => {
         const results = [];
-        fs.createReadStream(`${baseFile}.csv`)
+        fs.createReadStream(filePath)
           .pipe(csv())
           .on('data', (d) => results.push(d))
           .on('end', () => resolve(results))
