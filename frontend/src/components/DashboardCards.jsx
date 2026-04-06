@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import {
-  BarChart, Bar, LineChart, Line,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, Cell
-} from 'recharts';
+import React, { useState, useRef, useEffect } from 'react';
+import C3Chart from './C3Chart.jsx';
 import { ViewToggle, NoData, UpdatedBadge, formatCurrency, Badge } from './utils.jsx';
-import { useRef, useEffect } from 'react';
 
 // ============================================================
 // Auto Scroll Container 
@@ -186,17 +181,39 @@ export function CDRatioCard({ data = [], timestamp, configs = [] }) {
           )
         ) : (
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="BranchName" tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={v => v.split(' ')[0]} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
-                <Bar dataKey="Deposits" name="Deposits" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Loans" name="Loans" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <C3Chart
+              type="spline"
+              data={[
+                ['Deposits', ...data.map(d => d.Deposits)],
+                ['Loans', ...data.map(d => d.Loans)]
+              ]}
+              options={{
+                axis: {
+                  x: {
+                    type: 'category',
+                    categories: data.map(d => d.BranchName?.split(' ')[0]),
+                    tick: {
+                      rotate: 0,
+                      multiline: false,
+                    }
+                  },
+                  y: {
+                    tick: {
+                      format: v => formatCurrency(v).replace('₹', '')
+                    }
+                  }
+                },
+                color: {
+                  pattern: ['#3b82f6', '#8b5cf6']
+                },
+                grid: {
+                  y: { show: true }
+                },
+                legend: {
+                  show: true
+                }
+              }}
+            />
           </div>
         )}
       </AutoScrollContainer>
@@ -257,19 +274,27 @@ export function LiveTransactionsCard({ data = [], timestamp, configs = [] }) {
           )
         ) : (
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="Amount" name="Amount" radius={[4, 4, 0, 0]}>
-                  {chartData.map((entry, index) => (
-                    <Cell key={index} fill={entry.type === 'CREDIT' ? '#10b981' : entry.type === 'DEBIT' ? '#ef4444' : '#3b82f6'} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <C3Chart
+              type="spline"
+              data={[
+                ['Amount', ...chartData.map(d => d.Amount)]
+              ]}
+              options={{
+                axis: {
+                  x: {
+                    type: 'category',
+                    categories: chartData.map(d => d.name),
+                  },
+                  y: {
+                    tick: { format: v => formatCurrency(v).replace('₹', '') }
+                  }
+                },
+                color: {
+                  pattern: ['#10b981']
+                },
+                grid: { y: { show: true } }
+              }}
+            />
           </div>
         )}
       </AutoScrollContainer>
@@ -331,18 +356,29 @@ export function BankPositionCard({ data = [], timestamp, configs = [] }) {
           )
         ) : (
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
-                <Bar dataKey="Opening" name="Opening" fill="#64748b" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Current" name="Current" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Assets" name="Assets" fill="#10b981" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <C3Chart
+              type="area"
+              data={[
+                ['Opening', ...chartData.map(d => d.Opening)],
+                ['Current', ...chartData.map(d => d.Current)],
+                ['Assets', ...chartData.map(d => d.Assets)]
+              ]}
+              options={{
+                axis: {
+                  x: {
+                    type: 'category',
+                    categories: chartData.map(d => d.name),
+                  },
+                  y: {
+                    tick: { format: v => formatCurrency(v).replace('₹', '') }
+                  }
+                },
+                color: {
+                  pattern: ['#64748b', '#3b82f6', '#10b981']
+                },
+                grid: { y: { show: true } }
+              }}
+            />
           </div>
         )}
       </AutoScrollContainer>
@@ -405,18 +441,29 @@ export function CashPositionCard({ data = [], timestamp, configs = [] }) {
           )
         ) : (
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
-                <Bar dataKey="Deposits" name="Deposits" fill="#10b981" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Withdrawals" name="Withdrawals" fill="#ef4444" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Current" name="Net Position" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <C3Chart
+              type="area-spline"
+              data={[
+                ['Deposits', ...chartData.map(d => d.Deposits)],
+                ['Withdrawals', ...chartData.map(d => d.Withdrawals)],
+                ['Net Position', ...chartData.map(d => d.Current)]
+              ]}
+              options={{
+                axis: {
+                  x: {
+                    type: 'category',
+                    categories: chartData.map(d => d.name),
+                  },
+                  y: {
+                    tick: { format: v => formatCurrency(v).replace('₹', '') }
+                  }
+                },
+                color: {
+                  pattern: ['#10b981', '#ef4444', '#3b82f6']
+                },
+                grid: { y: { show: true } }
+              }}
+            />
           </div>
         )}
       </AutoScrollContainer>
@@ -479,17 +526,30 @@ export function LoggedInUsersCard({ data = [], timestamp, configs = [] }) {
           )
         ) : (
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 11 }} allowDecimals={false} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" name="Users" radius={[4, 4, 0, 0]}>
-                  {chartData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <C3Chart
+              type="area-spline"
+              data={[
+                ['Users', ...chartData.map(d => d.count)]
+              ]}
+              options={{
+                axis: {
+                  x: {
+                    type: 'category',
+                    categories: chartData.map(d => d.name),
+                  },
+                  y: {
+                    tick: {
+                      format: v => Math.floor(v)
+                    }
+                  }
+                },
+                color: {
+                  pattern: COLORS
+                },
+                grid: { y: { show: true } },
+                legend: { show: true }
+              }}
+            />
           </div>
         )}
       </AutoScrollContainer>
@@ -551,19 +611,30 @@ export function DayEndStatusCard({ data = [], timestamp, configs = [] }) {
           )
         ) : (
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 12 }} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 11 }} allowDecimals={false} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" name="Branches" radius={[4, 4, 0, 0]}>
-                  {chartData.map((entry, i) => (
-                    <Cell key={i} fill={entry.name === 'Completed' ? '#10b981' : '#f59e0b'} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <C3Chart
+              type="area-spline"
+              data={[
+                ['Count', ...chartData.map(d => d.count)]
+              ]}
+              options={{
+                axis: {
+                  x: {
+                    type: 'category',
+                    categories: chartData.map(d => d.name),
+                  },
+                  y: {
+                    tick: {
+                      format: v => Math.floor(v)
+                    }
+                  }
+                },
+                color: {
+                  pattern: ['#10b981', '#f59e0b']
+                },
+                grid: { y: { show: true } },
+                legend: { show: true }
+              }}
+            />
           </div>
         )}
       </AutoScrollContainer>

@@ -457,13 +457,15 @@ export default function App() {
           onDismiss={(id) => setDismissedAlerts(prev => new Set([...prev, id]))}
         />
 
-        {/* Top KPI Cards (Max 6 shown in one line) */}
+        {/* Top KPI Cards (Max 5 shown in one line) */}
         {dashboardData.top_cards?.length > 0 && (
-          <TopCards cards={dashboardData.top_cards.slice(0, 6)} />
+          <TopCards cards={dashboardData.top_cards.slice(0, 5)} />
         )}
 
-        {/* Dashboard Sections */}
-        <DraggableDashboardGrid dashboardData={dashboardData} timestamps={timestamps} apiConfigs={apiConfigs} />
+        {/* Dashboard Grid (Main Section) — exactly 2 rows of 3 */}
+        <div className="dashboard-section" style={{ flex: 1, minHeight: 0 }}>
+          <DraggableDashboardGrid dashboardData={dashboardData} timestamps={timestamps} apiConfigs={apiConfigs} />
+        </div>
       </main>
 
       {/* ── Connection Banner ── */}
