@@ -12,8 +12,9 @@ import {
   DayEndStatusCard,
 } from './components/DashboardCards.jsx';
 import { formatCurrency, formatNumber } from './components/utils.jsx';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useTheme } from 'next-themes';
+import { AlertModal, AlertBanners, triggerToast } from './components/AlertDisplay.jsx';
 
 // ========================================================
 // TanStack Query — Real Backend API (SQL Server via Node.js)
@@ -49,25 +50,7 @@ function useBankName() {
 // ========================================================
 // Alert Banner Component
 // ========================================================
-function AlertBanners({ alerts, onDismiss }) {
-  if (!alerts?.length) return null;
-  const icons = { INFO: 'ℹ️', WARNING: '⚠️', SUCCESS: '✅', BIRTHDAY: '🎉', NOTICE: '📢' };
-
-  return (
-    <div className="alerts-container">
-      {alerts.slice(0, 3).map((a) => (
-        <div key={a.Dashboard_AlertConfiguration_AlertId} className={`alert-banner ${a.AlertType || 'INFO'}`}>
-          <span className="alert-icon">{icons[a.AlertType] || 'ℹ️'}</span>
-          <div className="alert-content">
-            <div className="alert-title">{a.Title}</div>
-            <div className="alert-msg">{a.Message}</div>
-          </div>
-          <button className="alert-close" onClick={() => onDismiss(a.Dashboard_AlertConfiguration_AlertId)}>×</button>
-        </div>
-      ))}
-    </div>
-  );
-}
+// Existing AlertBanners removed (moved to AlertDisplay.jsx)
 
 // ========================================================
 // Top Metric Cards — Draggable with localStorage
@@ -174,18 +157,20 @@ function TopCards({ cards }) {
   );
 }
 
+// Component mapping moved outside to keep state persistent
+const cardComponents = {
+  CDRatioCard: CDRatioCard,
+  LiveTransactionsCard: LiveTransactionsCard,
+  BankPositionCard: BankPositionCard,
+  CashPositionCard: CashPositionCard,
+  LoggedInUsersCard: LoggedInUsersCard,
+  DayEndStatusCard: DayEndStatusCard,
+};
+
 // ========================================================
 // Draggable Dashboard Grid — bottom cards reordering
 // ========================================================
 function DraggableDashboardGrid({ dashboardData, timestamps, apiConfigs }) {
-  const cardComponents = {
-    CDRatioCard: (props) => <CDRatioCard {...props} />,
-    LiveTransactionsCard: (props) => <LiveTransactionsCard {...props} />,
-    BankPositionCard: (props) => <BankPositionCard {...props} />,
-    CashPositionCard: (props) => <CashPositionCard {...props} />,
-    LoggedInUsersCard: (props) => <LoggedInUsersCard {...props} />,
-    DayEndStatusCard: (props) => <DayEndStatusCard {...props} />,
-  };
 
   const defaultOrder = [
     { id: 'CDRatioCard', key: 'cd_ratio_analysis' },
@@ -282,6 +267,8 @@ export default function App() {
   const [dismissedAlerts, setDismissedAlerts] = useState(new Set());
   const [showConnectionBanner, setShowConnectionBanner] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [toastedAlerts, setToastedAlerts] = useState(new Set());
+  const [activeModalAlert, setActiveModalAlert] = useState(null);
 
   // ── Real backend data via TanStack Query (SQL Server → Node.js → React) ──
   const {
@@ -355,6 +342,26 @@ export default function App() {
   const visibleAlerts = (dashboardData.alerts || []).filter(
     a => !dismissedAlerts.has(a.Dashboard_AlertConfiguration_AlertId)
   );
+
+  // ── Alert Handler (Toast & Modal) ──
+  useEffect(() => {
+    if (!visibleAlerts.length) return;
+
+    visibleAlerts.forEach(alert => {
+      // Handle Toasts
+      if (alert.DisplayType === 'TOAST' && !toastedAlerts.has(alert.Dashboard_AlertConfiguration_AlertId)) {
+        triggerToast(alert);
+        setToastedAlerts(prev => new Set([...prev, alert.Dashboard_AlertConfiguration_AlertId]));
+      }
+
+      // Handle Modals (Pick the first one)
+      if (alert.DisplayType === 'MODAL' && !activeModalAlert) {
+        setActiveModalAlert(alert);
+      }
+    });
+  }, [visibleAlerts, toastedAlerts, activeModalAlert]);
+
+  const bannerAlerts = visibleAlerts.filter(a => a.DisplayType === 'BANNER');
 
   // ── Loading state: only block UI on very first load, max 5 seconds ──
   const [loadingTimeout, setLoadingTimeout] = useState(true);
@@ -446,7 +453,7 @@ export default function App() {
 
         {/* Alert Banners */}
         <AlertBanners
-          alerts={visibleAlerts}
+          alerts={bannerAlerts}
           onDismiss={(id) => setDismissedAlerts(prev => new Set([...prev, id]))}
         />
 
@@ -466,12 +473,26 @@ export default function App() {
         </div>
       )}
 
+      {/* ── Alert Modal ── */}
+      <AlertModal
+        alert={activeModalAlert}
+        onClose={() => {
+          if (activeModalAlert) {
+            setDismissedAlerts(prev => new Set([...prev, activeModalAlert.Dashboard_AlertConfiguration_AlertId]));
+            setActiveModalAlert(null);
+          }
+        }}
+      />
+
       {/* ── Configuration Modal ── */}
       <ConfigurationModal
         isOpen={isConfigOpen}
         onClose={() => setIsConfigOpen(false)}
         onSaved={() => refetchConfigs()}
       />
+
+      {/* ── Toast Container ── */}
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 }
