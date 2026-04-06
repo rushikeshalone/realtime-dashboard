@@ -370,7 +370,7 @@ body {
 }
 
 .card-body {
-  @apply p-3 flex-1 overflow-y-auto;
+  @apply p-3 overflow-y-auto;
   height: 180px; /* Highly compact fixed height */
 }
 

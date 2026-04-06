@@ -70,19 +70,13 @@ function AlertBanners({ alerts, onDismiss }) {
 }
 
 // ========================================================
-// Top Metric Cards
+// Top Metric Cards — Draggable with localStorage
 // ========================================================
 function TopCards({ cards }) {
   const icons = {
-    'Total Deposits': '🏦',
-    'Total Loans': '💳',
-    'Net Profit': '📈',
-    'Active Customers': '👥',
-    'Today Transactions': '⚡',
-    'CD Ratio': '📊',
-    'Total Branches': '🏢',
-    'NPA %': '⚠️',
-    'Profit This Month': '💰',
+    'Total Deposits': '🏦', 'Total Loans': '💳', 'Net Profit': '📈',
+    'Active Customers': '👥', 'Today Transactions': '⚡', 'CD Ratio': '📊',
+    'Total Branches': '🏢', 'NPA %': '⚠️', 'Profit This Month': '💰',
     'Pending Clearance': '🕐',
   };
   const gradients = {
@@ -107,11 +101,66 @@ function TopCards({ cards }) {
     return formatNumber(card.Value);
   };
 
+  // Drag-and-drop order from localStorage
+  const getOrder = () => {
+    try {
+      const saved = localStorage.getItem('topCardsOrder');
+      return saved ? JSON.parse(saved) : null;
+    } catch { return null; }
+  };
+
+  const [order, setOrder] = useState(() => getOrder());
+  const [dragIdx, setDragIdx] = useState(null);
+  const [overIdx, setOverIdx] = useState(null);
+
+  const orderedCards = (() => {
+    if (!order) return cards;
+    return order
+      .map(id => cards.find(c => c.TopCardsId === id))
+      .filter(Boolean)
+      .concat(cards.filter(c => !order.includes(c.TopCardsId)));
+  })();
+
+  const onDragStart = (e, idx) => {
+    setDragIdx(idx);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  const onDragOver = (e, idx) => { e.preventDefault(); setOverIdx(idx); };
+  const onDragLeave = () => setOverIdx(null);
+  const onDrop = (e, dropIdx) => {
+    e.preventDefault();
+    if (dragIdx === null || dragIdx === dropIdx) { setDragIdx(null); setOverIdx(null); return; }
+    const newOrder = [...orderedCards];
+    const [moved] = newOrder.splice(dragIdx, 1);
+    newOrder.splice(dropIdx, 0, moved);
+    const ids = newOrder.map(c => c.TopCardsId);
+    setOrder(ids);
+    localStorage.setItem('topCardsOrder', JSON.stringify(ids));
+    setDragIdx(null);
+    setOverIdx(null);
+  };
+  const onDragEnd = () => { setDragIdx(null); setOverIdx(null); };
+
   return (
     <div className="top-cards-grid">
-      {cards.map((card) => (
-        <div key={card.TopCardsId} className="metric-card"
-          style={{ '--card-accent': gradients[card.Particular] || 'var(--gradient-blue)' }}>
+      {orderedCards.map((card, i) => (
+        <div
+          key={card.TopCardsId}
+          className="metric-card"
+          draggable
+          onDragStart={e => onDragStart(e, i)}
+          onDragOver={e => onDragOver(e, i)}
+          onDragLeave={onDragLeave}
+          onDrop={e => onDrop(e, i)}
+          onDragEnd={onDragEnd}
+          style={{
+            '--card-accent': gradients[card.Particular] || 'var(--gradient-blue)',
+            opacity: dragIdx === i ? 0.4 : 1,
+            border: overIdx === i ? '2px dashed #3b82f6' : undefined,
+            cursor: 'grab',
+            transition: 'opacity 0.2s, border 0.2s',
+          }}
+        >
           <div className="metric-card-icon" style={{ background: gradients[card.Particular] || 'var(--gradient-blue)' }}>
             {icons[card.Particular] || '📊'}
           </div>
@@ -121,6 +170,103 @@ function TopCards({ cards }) {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+// ========================================================
+// Draggable Dashboard Grid — bottom cards reordering
+// ========================================================
+function DraggableDashboardGrid({ dashboardData, timestamps, apiConfigs }) {
+  const cardComponents = {
+    CDRatioCard: (props) => <CDRatioCard {...props} />,
+    LiveTransactionsCard: (props) => <LiveTransactionsCard {...props} />,
+    BankPositionCard: (props) => <BankPositionCard {...props} />,
+    CashPositionCard: (props) => <CashPositionCard {...props} />,
+    LoggedInUsersCard: (props) => <LoggedInUsersCard {...props} />,
+    DayEndStatusCard: (props) => <DayEndStatusCard {...props} />,
+  };
+
+  const defaultOrder = [
+    { id: 'CDRatioCard', key: 'cd_ratio_analysis' },
+    { id: 'LiveTransactionsCard', key: 'live_transactions' },
+    { id: 'BankPositionCard', key: 'bank_position' },
+    { id: 'CashPositionCard', key: 'cash_position' },
+    { id: 'LoggedInUsersCard', key: 'logged_in_users' },
+    { id: 'DayEndStatusCard', key: 'day_end_status' },
+  ];
+
+  const getSavedOrder = () => {
+    try {
+      const saved = localStorage.getItem('dashboardCardsOrder');
+      return saved ? JSON.parse(saved) : defaultOrder;
+    } catch {
+      return defaultOrder;
+    }
+  };
+
+  const [order, setOrder] = useState(getSavedOrder());
+  const [dragIdx, setDragIdx] = useState(null);
+  const [overIdx, setOverIdx] = useState(null);
+
+  const onDragStart = (e, idx) => {
+    setDragIdx(idx);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const onDragOver = (e, idx) => {
+    e.preventDefault();
+    setOverIdx(idx);
+  };
+
+  const onDrop = (e, dropIdx) => {
+    e.preventDefault();
+    if (dragIdx === null || dragIdx === dropIdx) {
+      setDragIdx(null);
+      setOverIdx(null);
+      return;
+    }
+
+    const newOrder = [...order];
+    const [movedItem] = newOrder.splice(dragIdx, 1);
+    newOrder.splice(dropIdx, 0, movedItem);
+
+    setOrder(newOrder);
+    localStorage.setItem('dashboardCardsOrder', JSON.stringify(newOrder));
+    setDragIdx(null);
+    setOverIdx(null);
+  };
+
+  return (
+    <div className="dashboard-section">
+      <div className="dashboard-cards-grid">
+        {order.map((item, i) => {
+          const Component = cardComponents[item.id];
+          return (
+            <div
+              key={item.id}
+              draggable
+              onDragStart={(e) => onDragStart(e, i)}
+              onDragOver={(e) => onDragOver(e, i)}
+              onDrop={(e) => onDrop(e, i)}
+              onDragEnd={() => { setDragIdx(null); setOverIdx(null); }}
+              style={{
+                opacity: dragIdx === i ? 0.4 : 1,
+                border: overIdx === i ? '2px dashed #3b82f6' : 'none',
+                borderRadius: '12px',
+                cursor: 'grab',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <Component
+                data={dashboardData[item.key] || []}
+                timestamp={timestamps[item.key]}
+                configs={apiConfigs || []}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -310,42 +456,7 @@ export default function App() {
         )}
 
         {/* Dashboard Sections */}
-        <div className="dashboard-section">
-
-
-          <div className="dashboard-cards-grid">
-            <CDRatioCard
-              data={dashboardData.cd_ratio_analysis || []}
-              timestamp={timestamps.cd_ratio_analysis}
-              configs={apiConfigs || []}
-            />
-            <LiveTransactionsCard
-              data={dashboardData.live_transactions || []}
-              timestamp={timestamps.live_transactions}
-              configs={apiConfigs || []}
-            />
-            <BankPositionCard
-              data={dashboardData.bank_position || []}
-              timestamp={timestamps.bank_position}
-              configs={apiConfigs || []}
-            />
-            <CashPositionCard
-              data={dashboardData.cash_position || []}
-              timestamp={timestamps.cash_position}
-              configs={apiConfigs || []}
-            />
-            <LoggedInUsersCard
-              data={dashboardData.logged_in_users || []}
-              timestamp={timestamps.logged_in_users}
-              configs={apiConfigs || []}
-            />
-            <DayEndStatusCard
-              data={dashboardData.day_end_status || []}
-              timestamp={timestamps.day_end_status}
-              configs={apiConfigs || []}
-            />
-          </div>
-        </div>
+        <DraggableDashboardGrid dashboardData={dashboardData} timestamps={timestamps} apiConfigs={apiConfigs} />
       </main>
 
       {/* ── Connection Banner ── */}
