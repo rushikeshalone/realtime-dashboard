@@ -114,12 +114,47 @@ router.get('/alerts', async (req, res) => {
   }
 });
 
+// GET /api/dashboard/bank-name
+router.get('/bank-name', async (req, res) => {
+  try {
+    const result = await query(`SELECT value FROM g_BankVariables WHERE name = 'BANK_NAME'`);
+    const name = result.recordset?.[0]?.value || 'Banking Dashboard';
+    res.json({ name });
+  } catch (err) {
+    res.json({ name: 'Banking Dashboard' });
+  }
+});
+
 // GET /api/dashboard/configurations
 router.get('/configurations', async (req, res) => {
   try {
     const data = (await query('SELECT * FROM Dashboard_Configurations WHERE IsActive=1 ORDER BY Sequence')).recordset;
     res.json(data);
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/dashboard/configurations
+router.post('/configurations', async (req, res) => {
+  try {
+    const updates = req.body;
+    for (const item of updates) {
+      await query(`
+        UPDATE Dashboard_Configurations
+        SET Sequence = @Sequence, IsDisplay = @IsDisplay, DisplayName = @DisplayName
+        WHERE CardName = @CardName AND ColumnName = @ColumnName
+      `, {
+        Sequence: item.Sequence,
+        IsDisplay: item.IsDisplay ? 1 : 0,
+        DisplayName: item.DisplayName || item.ColumnName,
+        CardName: item.CardName,
+        ColumnName: item.ColumnName
+      });
+    }
+    res.json({ success: true, message: 'Configurations updated successfully' });
+  } catch (err) {
+    console.error('Config update error:', err);
     res.status(500).json({ error: err.message });
   }
 });

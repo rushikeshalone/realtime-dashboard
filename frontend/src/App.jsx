@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getSocket, disconnectSocket, API_KEY, BACKEND_URL } from './socket.js';
-import { fetchDashboardSummary } from './api.js';
+import { fetchDashboardSummary, fetchConfigurations, fetchBankName } from './api.js';
+import ConfigurationModal from './components/ConfigurationModal.jsx';
 import {
   CDRatioCard,
   LiveTransactionsCard,
@@ -25,6 +26,23 @@ function useDashboardSummary() {
     retry: 3,
     retryDelay: 3000,
     refetchOnWindowFocus: false, // Prevents unwanted refetches since socket is active
+  });
+}
+
+function useDashboardConfigs() {
+  return useQuery({
+    queryKey: ['dashboard-configs'],
+    queryFn: fetchConfigurations,
+    refetchOnWindowFocus: false,
+  });
+}
+
+function useBankName() {
+  return useQuery({
+    queryKey: ['bank-name'],
+    queryFn: fetchBankName,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 }
 
@@ -117,6 +135,7 @@ export default function App() {
   const [connected, setConnected] = useState(false);
   const [dismissedAlerts, setDismissedAlerts] = useState(new Set());
   const [showConnectionBanner, setShowConnectionBanner] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
 
   // ── Real backend data via TanStack Query (SQL Server → Node.js → React) ──
   const {
@@ -126,6 +145,14 @@ export default function App() {
     error: apiErrorObj,
     dataUpdatedAt,
   } = useDashboardSummary();
+
+  const {
+    data: apiConfigs,
+    refetch: refetchConfigs
+  } = useDashboardConfigs();
+
+  const { data: bankNameData } = useBankName();
+  const bankName = bankNameData?.name || 'Banking Dashboard';
 
   useEffect(() => {
     if (apiData) {
@@ -210,7 +237,7 @@ export default function App() {
         <div className="header-logo">
           <div className="header-logo-icon">🏛️</div>
           <div>
-            <div className="header-title">Banking Dashboard</div>
+            <div className="header-title">{bankName}</div>
             <div className="header-subtitle">Real-Time Operations Monitor</div>
           </div>
         </div>
@@ -220,7 +247,7 @@ export default function App() {
             <span className={`live-dot ${connected ? '' : 'offline'}`} />
             {connected ? 'LIVE' : 'OFFLINE'}
           </div>
-          
+
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             style={{
@@ -236,6 +263,23 @@ export default function App() {
           >
             {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
           </button>
+
+          <button
+            onClick={() => setIsConfigOpen(true)}
+            style={{
+              background: 'var(--bg-card)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border)',
+              borderRadius: '8px',
+              padding: '6px 12px',
+              cursor: 'pointer',
+              fontSize: '16px',
+            }}
+            title="Configure Dashboard Settings"
+          >
+            ⚙️
+          </button>
+
           {lastUpdated && (
             <div className="last-updated">
               Updated: {new Date(lastUpdated).toLocaleTimeString('en-IN')}
@@ -273,26 +317,32 @@ export default function App() {
             <CDRatioCard
               data={dashboardData.cd_ratio_analysis || []}
               timestamp={timestamps.cd_ratio_analysis}
+              configs={apiConfigs || []}
             />
             <LiveTransactionsCard
               data={dashboardData.live_transactions || []}
               timestamp={timestamps.live_transactions}
+              configs={apiConfigs || []}
             />
             <BankPositionCard
               data={dashboardData.bank_position || []}
               timestamp={timestamps.bank_position}
+              configs={apiConfigs || []}
             />
             <CashPositionCard
               data={dashboardData.cash_position || []}
               timestamp={timestamps.cash_position}
+              configs={apiConfigs || []}
             />
             <LoggedInUsersCard
               data={dashboardData.logged_in_users || []}
               timestamp={timestamps.logged_in_users}
+              configs={apiConfigs || []}
             />
             <DayEndStatusCard
               data={dashboardData.day_end_status || []}
               timestamp={timestamps.day_end_status}
+              configs={apiConfigs || []}
             />
           </div>
         </div>
@@ -304,6 +354,13 @@ export default function App() {
           {connected ? '✅ Connected to live feed' : '🔌 Disconnected — reconnecting…'}
         </div>
       )}
+
+      {/* ── Configuration Modal ── */}
+      <ConfigurationModal
+        isOpen={isConfigOpen}
+        onClose={() => setIsConfigOpen(false)}
+        onSaved={() => refetchConfigs()}
+      />
     </div>
   );
 }

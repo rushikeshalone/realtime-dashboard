@@ -4,7 +4,7 @@ import axios from 'axios';
 // Axios instance — configured with base URL + API key header
 // ============================================================
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
-const API_KEY     = import.meta.env.VITE_API_KEY      || 'Trust@2026#$XYZ';
+const API_KEY = import.meta.env.VITE_API_KEY || 'Trust@2026';
 
 export const apiClient = axios.create({
   baseURL: BACKEND_URL,
@@ -28,11 +28,14 @@ export const fetchDashboardSummary = async () => {
 };
 
 // ── Individual endpoints (for granular re-fetching) ──
-export const fetchTopCards       = async () => (await apiClient.get('/api/dashboard/top-cards')).data;
-export const fetchCDRatio        = async () => (await apiClient.get('/api/dashboard/cd-ratio')).data;
+export const fetchTopCards = async () => (await apiClient.get('/api/dashboard/top-cards')).data;
+export const fetchCDRatio = async () => (await apiClient.get('/api/dashboard/cd-ratio')).data;
 export const fetchLiveTransactions = async () => (await apiClient.get('/api/dashboard/live-transactions')).data;
-export const fetchBankPosition   = async () => (await apiClient.get('/api/dashboard/bank-position')).data;
-export const fetchCashPosition   = async () => (await apiClient.get('/api/dashboard/cash-position')).data;
-export const fetchLoggedInUsers  = async () => (await apiClient.get('/api/dashboard/logged-in-users')).data;
-export const fetchDayEndStatus   = async () => (await apiClient.get('/api/dashboard/day-end-status')).data;
-export const fetchAlerts         = async () => (await apiClient.get('/api/dashboard/alerts')).data;
+export const fetchBankPosition = async () => (await apiClient.get('/api/dashboard/bank-position')).data;
+export const fetchCashPosition = async () => (await apiClient.get('/api/dashboard/cash-position')).data;
+export const fetchLoggedInUsers = async () => (await apiClient.get('/api/dashboard/logged-in-users')).data;
+export const fetchDayEndStatus = async () => (await apiClient.get('/api/dashboard/day-end-status')).data;
+export const fetchAlerts = async () => (await apiClient.get('/api/dashboard/alerts')).data;
+export const fetchConfigurations = async () => (await apiClient.get('/api/dashboard/configurations')).data;
+export const updateConfigurations = async (configs) => (await apiClient.post('/api/dashboard/configurations', configs)).data;
+export const fetchBankName = async () => (await apiClient.get('/api/dashboard/bank-name')).data;

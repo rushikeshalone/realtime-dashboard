@@ -19,19 +19,17 @@ function AutoScrollContainer({ children, scrollActive }) {
     const el = scrollRef.current;
     if (!el) return;
 
-    let direction = 1; // 1 for down, -1 for up
+    let direction = 1;
     let prevScrollTop = -1;
 
     let intervalId = setInterval(() => {
       if (el.scrollHeight > el.clientHeight) {
         el.scrollTop += direction;
-        
         if (direction === 1 && (el.scrollTop >= el.scrollHeight - el.clientHeight - 1 || el.scrollTop === prevScrollTop)) {
-          direction = -1; // Reverse to scroll UP
+          direction = -1;
         } else if (direction === -1 && (el.scrollTop <= 0 || el.scrollTop === prevScrollTop)) {
-          direction = 1; // Reverse to scroll DOWN
+          direction = 1;
         }
-        
         prevScrollTop = el.scrollTop;
       }
     }, 40);
@@ -40,8 +38,8 @@ function AutoScrollContainer({ children, scrollActive }) {
   }, [scrollActive, isHovered]);
 
   return (
-    <div 
-      className="card-body" 
+    <div
+      className="card-body"
       ref={scrollRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -54,7 +52,6 @@ function AutoScrollContainer({ children, scrollActive }) {
 
 const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'];
 
-// Custom tooltip for recharts
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
@@ -73,10 +70,87 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 // ============================================================
+// Helper: get active columns sorted by Sequence for a card
+// ============================================================
+function getActiveColumns(configs, cardName) {
+  if (!configs || configs.length === 0) return null;
+  return configs
+    .filter(c => c.CardName === cardName && c.IsDisplay === 1)
+    .sort((a, b) => a.Sequence - b.Sequence);
+}
+
+// Render a cell value with special formatting
+function renderCell(col, row) {
+  const val = row[col.ColumnName];
+  // Date/Time columns
+  if (col.ColumnName === 'TransactionDate' || col.ColumnName === 'LastLoginTime' || col.ColumnName === 'DayEndDoneAt' || col.ColumnName === 'DayBeginAt' || col.ColumnName === 'LastDayEndDate' || col.ColumnName === 'CurrentDate') {
+    if (!val) return '—';
+    return new Date(val).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' });
+  }
+  // Currency columns
+  if (['Deposits', 'Loans', 'OpeningCashPosition', 'CurrentCashPosition', 'DepositPosition', 'WithdrawlPosition', 'TotalCashPosition', 'OpeningBankPosition', 'CurrentBankPosition', 'LiabilityPosition', 'AssetPosition', 'TransactionAmount'].includes(col.ColumnName)) {
+    return <span className="num">{formatCurrency(val)}</span>;
+  }
+  // CD Ratio
+  if (col.ColumnName === 'CDRatio') {
+    return (
+      <span className={`badge ${parseFloat(val) >= 70 ? 'badge-green' : 'badge-amber'}`}>
+        {parseFloat(val).toFixed(2)}%
+      </span>
+    );
+  }
+  // Transaction Type
+  if (col.ColumnName === 'TransactionType') {
+    return <Badge type={val}>{val}</Badge>;
+  }
+  // User Role
+  if (col.ColumnName === 'UserRole') {
+    return <Badge type={val}>{val}</Badge>;
+  }
+  // IsActive
+  if (col.ColumnName === 'IsActive') {
+    return (
+      <div className="user-status">
+        <span className={`status-dot ${val === 1 ? 'active' : 'inactive'}`} />
+      </div>
+    );
+  }
+  // Day End status (DayEndDoneBy / DayBeginBy)
+  return val ?? '—';
+}
+
+// ============================================================
+// Generic Dynamic Table
+// ============================================================
+function DynamicTable({ data, columns }) {
+  return (
+    <table className="data-table">
+      <thead>
+        <tr>
+          {columns.map(col => (
+            <th key={col.ColumnName}>{col.DisplayName || col.ColumnName}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row, i) => (
+          <tr key={i}>
+            {columns.map(col => (
+              <td key={col.ColumnName}>{renderCell(col, row)}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+// ============================================================
 // CDRatioCard
 // ============================================================
-export function CDRatioCard({ data = [], timestamp }) {
+export function CDRatioCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
+  const activeCols = getActiveColumns(configs, 'CD Ratio Analysis');
 
   return (
     <div className="card">
@@ -93,30 +167,23 @@ export function CDRatioCard({ data = [], timestamp }) {
 
       <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Branch</th>
-                <th>Deposits</th>
-                <th>Loans</th>
-                <th>CD Ratio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr key={row.CDRatioAnalysisId}>
-                  <td>{row.BranchName}</td>
-                  <td className="num">{formatCurrency(row.Deposits)}</td>
-                  <td className="num">{formatCurrency(row.Loans)}</td>
-                  <td>
-                    <span className={`badge ${parseFloat(row.CDRatio) >= 70 ? 'badge-green' : 'badge-amber'}`}>
-                      {parseFloat(row.CDRatio).toFixed(2)}%
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          activeCols ? (
+            <DynamicTable data={data} columns={activeCols} />
+          ) : (
+            <table className="data-table">
+              <thead><tr><th>Branch</th><th>Deposits</th><th>Loans</th><th>CD Ratio</th></tr></thead>
+              <tbody>
+                {data.map((row) => (
+                  <tr key={row.CDRatioAnalysisId}>
+                    <td>{row.BranchName}</td>
+                    <td className="num">{formatCurrency(row.Deposits)}</td>
+                    <td className="num">{formatCurrency(row.Loans)}</td>
+                    <td><span className={`badge ${parseFloat(row.CDRatio) >= 70 ? 'badge-green' : 'badge-amber'}`}>{parseFloat(row.CDRatio).toFixed(2)}%</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
         ) : (
           <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
@@ -126,8 +193,8 @@ export function CDRatioCard({ data = [], timestamp }) {
                 <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
-                <Bar dataKey="Deposits" name="Deposits" fill="#3b82f6" radius={[4,4,0,0]} />
-                <Bar dataKey="Loans" name="Loans" fill="#8b5cf6" radius={[4,4,0,0]} />
+                <Bar dataKey="Deposits" name="Deposits" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Loans" name="Loans" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -145,8 +212,9 @@ export function CDRatioCard({ data = [], timestamp }) {
 // ============================================================
 // LiveTransactionsCard
 // ============================================================
-export function LiveTransactionsCard({ data = [], timestamp }) {
+export function LiveTransactionsCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
+  const activeCols = getActiveColumns(configs, 'Live Transactions');
 
   const chartData = data.slice(0, 15).map(r => ({
     name: r.CustomerName?.split(' ')[0] || 'N/A',
@@ -169,30 +237,24 @@ export function LiveTransactionsCard({ data = [], timestamp }) {
 
       <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Customer</th>
-                <th>Branch</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.slice(0, 50).map((row) => (
-                <tr key={row.LiveTransactionsId}>
-                  <td>{row.CustomerName}</td>
-                  <td className="dim">{row.BranchName}</td>
-                  <td><Badge type={row.TransactionType}>{row.TransactionType}</Badge></td>
-                  <td className="num">{formatCurrency(row.TransactionAmount)}</td>
-                  <td className="dim" style={{ fontSize: 11 }}>
-                    {new Date(row.TransactionDate).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          activeCols ? (
+            <DynamicTable data={data.slice(0, 50)} columns={activeCols} />
+          ) : (
+            <table className="data-table">
+              <thead><tr><th>Customer</th><th>Branch</th><th>Type</th><th>Amount</th><th>Time</th></tr></thead>
+              <tbody>
+                {data.slice(0, 50).map((row) => (
+                  <tr key={row.LiveTransactionsId}>
+                    <td>{row.CustomerName}</td>
+                    <td className="dim">{row.BranchName}</td>
+                    <td><Badge type={row.TransactionType}>{row.TransactionType}</Badge></td>
+                    <td className="num">{formatCurrency(row.TransactionAmount)}</td>
+                    <td className="dim" style={{ fontSize: 11 }}>{new Date(row.TransactionDate).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
         ) : (
           <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
@@ -201,13 +263,11 @@ export function LiveTransactionsCard({ data = [], timestamp }) {
                 <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} />
                 <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="Amount" name="Amount" radius={[4,4,0,0]}>
+                <Bar dataKey="Amount" name="Amount" radius={[4, 4, 0, 0]}>
                   {chartData.map((entry, index) => (
-                    <Cell key={index}
-                      fill={entry.type === 'CREDIT' ? '#10b981' : entry.type === 'DEBIT' ? '#ef4444' : '#3b82f6'}
-                    />
+                    <Cell key={index} fill={entry.type === 'CREDIT' ? '#10b981' : entry.type === 'DEBIT' ? '#ef4444' : '#3b82f6'} />
                   ))}
-                 </Bar>
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -225,15 +285,15 @@ export function LiveTransactionsCard({ data = [], timestamp }) {
 // ============================================================
 // BankPositionCard
 // ============================================================
-export function BankPositionCard({ data = [], timestamp }) {
+export function BankPositionCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
+  const activeCols = getActiveColumns(configs, 'Bank Position');
 
   const chartData = data.slice(0, 10).map(r => ({
     name: r.BranchName?.split(' ')[0] || 'N/A',
     Opening: parseFloat(r.OpeningBankPosition) || 0,
     Current: parseFloat(r.CurrentBankPosition) || 0,
     Assets: parseFloat(r.AssetPosition) || 0,
-    Liabilities: parseFloat(r.LiabilityPosition) || 0,
   }));
 
   return (
@@ -251,28 +311,24 @@ export function BankPositionCard({ data = [], timestamp }) {
 
       <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Branch</th>
-                <th>Account Head</th>
-                <th>Opening</th>
-                <th>Current</th>
-                <th>Assets</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr key={row.BankPositionId}>
-                  <td>{row.BranchName}</td>
-                  <td className="dim">{row.AccountHeadName}</td>
-                  <td className="num">{formatCurrency(row.OpeningBankPosition)}</td>
-                  <td className="num" style={{ color: '#60a5fa' }}>{formatCurrency(row.CurrentBankPosition)}</td>
-                  <td className="num" style={{ color: '#34d399' }}>{formatCurrency(row.AssetPosition)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          activeCols ? (
+            <DynamicTable data={data} columns={activeCols} />
+          ) : (
+            <table className="data-table">
+              <thead><tr><th>Branch</th><th>Account Head</th><th>Opening</th><th>Current</th><th>Assets</th></tr></thead>
+              <tbody>
+                {data.map((row) => (
+                  <tr key={row.BankPositionId}>
+                    <td>{row.BranchName}</td>
+                    <td className="dim">{row.AccountHeadName}</td>
+                    <td className="num">{formatCurrency(row.OpeningBankPosition)}</td>
+                    <td className="num" style={{ color: '#60a5fa' }}>{formatCurrency(row.CurrentBankPosition)}</td>
+                    <td className="num" style={{ color: '#34d399' }}>{formatCurrency(row.AssetPosition)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
         ) : (
           <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
@@ -282,9 +338,9 @@ export function BankPositionCard({ data = [], timestamp }) {
                 <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
-                <Bar dataKey="Opening" name="Opening" fill="#64748b" radius={[4,4,0,0]} />
-                <Bar dataKey="Current" name="Current" fill="#3b82f6" radius={[4,4,0,0]} />
-                <Bar dataKey="Assets" name="Assets" fill="#10b981" radius={[4,4,0,0]} />
+                <Bar dataKey="Opening" name="Opening" fill="#64748b" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Current" name="Current" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Assets" name="Assets" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -302,8 +358,9 @@ export function BankPositionCard({ data = [], timestamp }) {
 // ============================================================
 // CashPositionCard
 // ============================================================
-export function CashPositionCard({ data = [], timestamp }) {
+export function CashPositionCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
+  const activeCols = getActiveColumns(configs, 'Cash Position');
 
   const chartData = data.map(r => ({
     name: r.BranchName?.split(' ')[0] || 'N/A',
@@ -328,28 +385,24 @@ export function CashPositionCard({ data = [], timestamp }) {
 
       <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Branch</th>
-                <th>Opening</th>
-                <th>Deposits</th>
-                <th>Withdrawals</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr key={row.CashPositionId}>
-                  <td>{row.BranchName}</td>
-                  <td className="num">{formatCurrency(row.OpeningCashPosition)}</td>
-                  <td className="num" style={{ color: '#34d399' }}>+{formatCurrency(row.DepositPosition)}</td>
-                  <td className="num" style={{ color: '#f87171' }}>-{formatCurrency(row.WithdrawlPosition)}</td>
-                  <td className="num" style={{ color: '#60a5fa', fontWeight: 600 }}>{formatCurrency(row.TotalCashPosition)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          activeCols ? (
+            <DynamicTable data={data} columns={activeCols} />
+          ) : (
+            <table className="data-table">
+              <thead><tr><th>Branch</th><th>Opening</th><th>Deposits</th><th>Withdrawals</th><th>Total</th></tr></thead>
+              <tbody>
+                {data.map((row) => (
+                  <tr key={row.CashPositionId}>
+                    <td>{row.BranchName}</td>
+                    <td className="num">{formatCurrency(row.OpeningCashPosition)}</td>
+                    <td className="num" style={{ color: '#34d399' }}>+{formatCurrency(row.DepositPosition)}</td>
+                    <td className="num" style={{ color: '#f87171' }}>-{formatCurrency(row.WithdrawlPosition)}</td>
+                    <td className="num" style={{ color: '#60a5fa', fontWeight: 600 }}>{formatCurrency(row.TotalCashPosition)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
         ) : (
           <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
@@ -359,9 +412,9 @@ export function CashPositionCard({ data = [], timestamp }) {
                 <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={formatCurrency} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
-                <Bar dataKey="Deposits" name="Deposits" fill="#10b981" radius={[4,4,0,0]} />
-                <Bar dataKey="Withdrawals" name="Withdrawals" fill="#ef4444" radius={[4,4,0,0]} />
-                <Bar dataKey="Current" name="Net Position" fill="#3b82f6" radius={[4,4,0,0]} />
+                <Bar dataKey="Deposits" name="Deposits" fill="#10b981" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Withdrawals" name="Withdrawals" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Current" name="Net Position" fill="#3b82f6" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -379,8 +432,9 @@ export function CashPositionCard({ data = [], timestamp }) {
 // ============================================================
 // LoggedInUsersCard
 // ============================================================
-export function LoggedInUsersCard({ data = [], timestamp }) {
+export function LoggedInUsersCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
+  const activeCols = getActiveColumns(configs, 'Logged In Users');
 
   const activeCount = data.filter(u => u.IsActive === 1).length;
   const roleData = data.reduce((acc, u) => {
@@ -405,34 +459,24 @@ export function LoggedInUsersCard({ data = [], timestamp }) {
 
       <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Status</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Branch</th>
-                <th>Last Login</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr key={row.LogedInUserId}>
-                  <td>
-                    <div className="user-status">
-                      <span className={`status-dot ${row.IsActive === 1 ? 'active' : 'inactive'}`} />
-                    </div>
-                  </td>
-                  <td style={{ fontWeight: 500 }}>{row.UserName}</td>
-                  <td><Badge type={row.UserRole}>{row.UserRole}</Badge></td>
-                  <td className="dim">{row.BranchName}</td>
-                  <td className="dim" style={{ fontSize: 11 }}>
-                    {new Date(row.LastLoginTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          activeCols ? (
+            <DynamicTable data={data} columns={activeCols} />
+          ) : (
+            <table className="data-table">
+              <thead><tr><th>Status</th><th>Username</th><th>Role</th><th>Branch</th><th>Last Login</th></tr></thead>
+              <tbody>
+                {data.map((row) => (
+                  <tr key={row.LogedInUserId}>
+                    <td><div className="user-status"><span className={`status-dot ${row.IsActive === 1 ? 'active' : 'inactive'}`} /></div></td>
+                    <td style={{ fontWeight: 500 }}>{row.UserName}</td>
+                    <td><Badge type={row.UserRole}>{row.UserRole}</Badge></td>
+                    <td className="dim">{row.BranchName}</td>
+                    <td className="dim" style={{ fontSize: 11 }}>{new Date(row.LastLoginTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
         ) : (
           <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
@@ -441,7 +485,7 @@ export function LoggedInUsersCard({ data = [], timestamp }) {
                 <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} />
                 <YAxis tick={{ fill: '#64748b', fontSize: 11 }} allowDecimals={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" name="Users" radius={[4,4,0,0]}>
+                <Bar dataKey="count" name="Users" radius={[4, 4, 0, 0]}>
                   {chartData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                 </Bar>
               </BarChart>
@@ -461,8 +505,9 @@ export function LoggedInUsersCard({ data = [], timestamp }) {
 // ============================================================
 // DayEndStatusCard
 // ============================================================
-export function DayEndStatusCard({ data = [], timestamp }) {
+export function DayEndStatusCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
+  const activeCols = getActiveColumns(configs, 'Day End Status');
 
   const statusCount = data.reduce((acc, r) => {
     const done = r.DayEndDoneAt ? 'Completed' : 'Pending';
@@ -486,34 +531,24 @@ export function DayEndStatusCard({ data = [], timestamp }) {
 
       <AutoScrollContainer scrollActive={view === 'table'}>
         {data.length === 0 ? <NoData /> : view === 'table' ? (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Branch</th>
-                <th>Day End By</th>
-                <th>Day End At</th>
-                <th>Day Begin By</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr key={row.Dashboard_DayEndStatusId}>
-                  <td>{row.BranchName}</td>
-                  <td className="dim">{row.DayEndDoneBy || '—'}</td>
-                  <td className="dim" style={{ fontSize: 11 }}>
-                    {row.DayEndDoneAt ? new Date(row.DayEndDoneAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—'}
-                  </td>
-                  <td className="dim">{row.DayBeginBy || '—'}</td>
-                  <td>
-                    <Badge type={row.DayEndDoneAt ? 'DONE' : 'PENDING'}>
-                      {row.DayEndDoneAt ? 'Done' : 'Pending'}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          activeCols ? (
+            <DynamicTable data={data} columns={activeCols} />
+          ) : (
+            <table className="data-table">
+              <thead><tr><th>Branch</th><th>Day End By</th><th>Day End At</th><th>Day Begin By</th><th>Status</th></tr></thead>
+              <tbody>
+                {data.map((row) => (
+                  <tr key={row.Dashboard_DayEndStatusId}>
+                    <td>{row.BranchName}</td>
+                    <td className="dim">{row.DayEndDoneBy || '—'}</td>
+                    <td className="dim" style={{ fontSize: 11 }}>{row.DayEndDoneAt ? new Date(row.DayEndDoneAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—'}</td>
+                    <td className="dim">{row.DayBeginBy || '—'}</td>
+                    <td><Badge type={row.DayEndDoneAt ? 'DONE' : 'PENDING'}>{row.DayEndDoneAt ? 'Done' : 'Pending'}</Badge></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
         ) : (
           <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
@@ -522,7 +557,7 @@ export function DayEndStatusCard({ data = [], timestamp }) {
                 <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 12 }} />
                 <YAxis tick={{ fill: '#64748b', fontSize: 11 }} allowDecimals={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" name="Branches" radius={[4,4,0,0]}>
+                <Bar dataKey="count" name="Branches" radius={[4, 4, 0, 0]}>
                   {chartData.map((entry, i) => (
                     <Cell key={i} fill={entry.name === 'Completed' ? '#10b981' : '#f59e0b'} />
                   ))}

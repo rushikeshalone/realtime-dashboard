@@ -4,24 +4,30 @@ const sql = require('mssql');
 const server = process.env.DB_SERVER || 'DESKTOP-40B0H7H\\RUSHI';
 const database = process.env.DB_NAME || 'Rushi';
 
-// Try NTLM (Windows Auth without password)
-const cfgNtlm = {
+const isSqlAuth = !!process.env.DB_PASSWORD;
+
+const cfg = {
   server,
   database,
   port: 1433,
-  authentication: {
-    type: 'ntlm',
-    options: {
-      domain: '',
-      userName: process.env.DB_USER || 'Rushikesh',
-      password: '',
-    },
-  },
+  ...(isSqlAuth ? {
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+  } : {
+    authentication: {
+      type: 'ntlm',
+      options: {
+        domain: '',
+        userName: process.env.DB_USER || 'Rushikesh',
+        password: '',
+      },
+    }
+  }),
   options: {
     encrypt: false,
     trustServerCertificate: true,
     enableArithAbort: true,
-    instanceName: 'RUSHI',
+    instanceName: server.includes('\\') ? server.split('\\')[1] : 'RUSHI',
   },
   connectionTimeout: 15000,
 };
@@ -29,12 +35,12 @@ const cfgNtlm = {
 console.log('=== Testing SQL Server Connection ===');
 console.log('Server  :', server);
 console.log('Database:', database);
-console.log('Mode    : Windows Auth (NTLM)');
+console.log('Mode    : ' + (isSqlAuth ? 'SQL Authentication' : 'Windows Auth (NTLM)'));
 console.log('');
 
-sql.connect(cfgNtlm)
+sql.connect(cfg)
   .then((pool) => {
-    console.log('✅ SUCCESS - Connected via Windows Auth (NTLM)');
+    console.log(`✅ SUCCESS - Connected via ${isSqlAuth ? 'SQL Auth' : 'Windows Auth (NTLM)'}`);
     return pool.request().query('SELECT @@VERSION AS version, DB_NAME() AS dbname');
   })
   .then((result) => {

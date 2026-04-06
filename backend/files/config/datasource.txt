@@ -1,2 +1,2 @@
-JSON
+SQL
 # Options: SQL, JSON, CSV, XML, EXCEL
