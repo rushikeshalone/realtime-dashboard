@@ -95,6 +95,10 @@ function TopCards({ cards }) {
   const [order, setOrder] = useState(() => getOrder());
   const [dragIdx, setDragIdx] = useState(null);
   const [overIdx, setOverIdx] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  const DRAG_THRESHOLD = 5;
 
   const orderedCards = (() => {
     if (!order) return cards;
@@ -104,25 +108,50 @@ function TopCards({ cards }) {
       .concat(cards.filter(c => !order.includes(c.TopCardsId)));
   })();
 
-  const onDragStart = (e, idx) => {
+  useEffect(() => {
+    if (dragIdx === null) return;
+
+    const handleMouseMove = (e) => {
+      const distance = Math.sqrt(
+        Math.pow(e.clientX - dragStart.x, 2) + Math.pow(e.clientY - dragStart.y, 2)
+      );
+      if (distance > DRAG_THRESHOLD && !isDragging) {
+        setIsDragging(true);
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isDragging && dragIdx !== null && overIdx !== null && dragIdx !== overIdx) {
+        const newOrder = [...orderedCards];
+        const [moved] = newOrder.splice(dragIdx, 1);
+        newOrder.splice(overIdx, 0, moved);
+        const ids = newOrder.map(c => c.TopCardsId);
+        setOrder(ids);
+        localStorage.setItem('topCardsOrder', JSON.stringify(ids));
+      }
+      setDragIdx(null);
+      setOverIdx(null);
+      setIsDragging(false);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [dragIdx, dragStart, isDragging, overIdx, orderedCards]);
+
+  const onCardMouseDown = (e, idx) => {
     setDragIdx(idx);
-    e.dataTransfer.effectAllowed = 'move';
+    setDragStart({ x: e.clientX, y: e.clientY });
   };
-  const onDragOver = (e, idx) => { e.preventDefault(); setOverIdx(idx); };
-  const onDragLeave = () => setOverIdx(null);
-  const onDrop = (e, dropIdx) => {
-    e.preventDefault();
-    if (dragIdx === null || dragIdx === dropIdx) { setDragIdx(null); setOverIdx(null); return; }
-    const newOrder = [...orderedCards];
-    const [moved] = newOrder.splice(dragIdx, 1);
-    newOrder.splice(dropIdx, 0, moved);
-    const ids = newOrder.map(c => c.TopCardsId);
-    setOrder(ids);
-    localStorage.setItem('topCardsOrder', JSON.stringify(ids));
-    setDragIdx(null);
-    setOverIdx(null);
+
+  const onCardMouseOver = (idx) => {
+    if (isDragging && dragIdx !== null) {
+      setOverIdx(idx);
+    }
   };
-  const onDragEnd = () => { setDragIdx(null); setOverIdx(null); };
 
   return (
     <div className="top-cards-grid">
@@ -130,18 +159,15 @@ function TopCards({ cards }) {
         <div
           key={card.TopCardsId}
           className="metric-card"
-          draggable
-          onDragStart={e => onDragStart(e, i)}
-          onDragOver={e => onDragOver(e, i)}
-          onDragLeave={onDragLeave}
-          onDrop={e => onDrop(e, i)}
-          onDragEnd={onDragEnd}
+          onMouseDown={(e) => onCardMouseDown(e, i)}
+          onMouseOver={() => onCardMouseOver(i)}
           style={{
             '--card-accent': gradients[card.Particular] || 'var(--gradient-blue)',
-            opacity: dragIdx === i ? 0.4 : 1,
-            border: overIdx === i ? '2px dashed #3b82f6' : undefined,
-            cursor: 'grab',
+            opacity: isDragging && dragIdx === i ? 0.4 : 1,
+            border: isDragging && overIdx === i ? '2px dashed #3b82f6' : undefined,
+            cursor: isDragging ? 'grabbing' : 'grab',
             transition: 'opacity 0.2s, border 0.2s',
+            userSelect: 'none',
           }}
         >
           <div className="metric-card-icon" style={{ background: gradients[card.Particular] || 'var(--gradient-blue)' }}>
@@ -193,33 +219,55 @@ function DraggableDashboardGrid({ dashboardData, timestamps, apiConfigs }) {
   const [order, setOrder] = useState(getSavedOrder());
   const [dragIdx, setDragIdx] = useState(null);
   const [overIdx, setOverIdx] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
-  const onDragStart = (e, idx) => {
-    setDragIdx(idx);
-    e.dataTransfer.effectAllowed = 'move';
-  };
+  const DRAG_THRESHOLD = 5;
 
-  const onDragOver = (e, idx) => {
-    e.preventDefault();
-    setOverIdx(idx);
-  };
+  useEffect(() => {
+    if (dragIdx === null) return;
 
-  const onDrop = (e, dropIdx) => {
-    e.preventDefault();
-    if (dragIdx === null || dragIdx === dropIdx) {
+    const handleMouseMove = (e) => {
+      const distance = Math.sqrt(
+        Math.pow(e.clientX - dragStart.x, 2) + Math.pow(e.clientY - dragStart.y, 2)
+      );
+      if (distance > DRAG_THRESHOLD && !isDragging) {
+        setIsDragging(true);
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isDragging && dragIdx !== null && overIdx !== null && dragIdx !== overIdx) {
+        const newOrder = [...order];
+        const [movedItem] = newOrder.splice(dragIdx, 1);
+        newOrder.splice(overIdx, 0, movedItem);
+        setOrder(newOrder);
+        localStorage.setItem('dashboardCardsOrder', JSON.stringify(newOrder));
+      }
       setDragIdx(null);
       setOverIdx(null);
-      return;
+      setIsDragging(false);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [dragIdx, dragStart, isDragging, overIdx, order]);
+
+  const onHeaderMouseDown = (e, idx) => {
+    // Allow drag from card itself, but not from scrollbar
+    if (e.target.closest('.card-body') || e.target.closest('table')) return;
+    setDragIdx(idx);
+    setDragStart({ x: e.clientX, y: e.clientY });
+  };
+
+  const onCardMouseOver = (idx) => {
+    if (isDragging && dragIdx !== null) {
+      setOverIdx(idx);
     }
-
-    const newOrder = [...order];
-    const [movedItem] = newOrder.splice(dragIdx, 1);
-    newOrder.splice(dropIdx, 0, movedItem);
-
-    setOrder(newOrder);
-    localStorage.setItem('dashboardCardsOrder', JSON.stringify(newOrder));
-    setDragIdx(null);
-    setOverIdx(null);
   };
 
   return (
@@ -230,17 +278,15 @@ function DraggableDashboardGrid({ dashboardData, timestamps, apiConfigs }) {
           return (
             <div
               key={item.id}
-              draggable
-              onDragStart={(e) => onDragStart(e, i)}
-              onDragOver={(e) => onDragOver(e, i)}
-              onDrop={(e) => onDrop(e, i)}
-              onDragEnd={() => { setDragIdx(null); setOverIdx(null); }}
+              onMouseDown={(e) => onHeaderMouseDown(e, i)}
+              onMouseOver={() => onCardMouseOver(i)}
               style={{
-                opacity: dragIdx === i ? 0.4 : 1,
-                border: overIdx === i ? '2px dashed #3b82f6' : 'none',
+                opacity: isDragging && dragIdx === i ? 0.4 : 1,
+                border: isDragging && overIdx === i ? '2px dashed #3b82f6' : 'none',
                 borderRadius: '12px',
-                cursor: 'grab',
+                cursor: isDragging ? 'grabbing' : 'default',
                 transition: 'all 0.2s ease',
+                userSelect: 'none',
               }}
             >
               <Component

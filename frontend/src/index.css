@@ -459,6 +459,16 @@ body {
   @apply text-slate-400;
 }
 
+.created-on-date {
+  @apply font-bold text-[13px] text-slate-300;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.5px;
+}
+
+.dark .created-on-date {
+  @apply text-slate-200;
+}
+
 .updated-badge {
   @apply text-slate-400 font-mono flex items-center gap-1.5;
 }
