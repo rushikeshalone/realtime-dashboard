@@ -67,6 +67,63 @@ export const formatCreatedOn = (dt) => {
   }
 };
 
+export const formatDateField = (dt) => {
+  if (!dt) return '—';
+  try {
+    let date;
+    const dtStr = String(dt).trim();
+    
+    console.log('🔍 formatDateField input:', dtStr);
+    
+    // Try different date formats
+    // Format 1: SQL Server "2026-04-08 15:01:02.380" or "2026-04-08 15:01:02"
+    if (dtStr.match(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/)) {
+      const isoString = dtStr.replace(' ', 'T');
+      date = new Date(isoString);
+    }
+    // Format 2: Already formatted like "10-Nov-2025 00:00:00" - parse it
+    else if (dtStr.match(/^\d{1,2}-[A-Za-z]{3}-\d{4}\s\d{2}:\d{2}:\d{2}/)) {
+      // Parse "10-Nov-2025 00:00:00"
+      const parts = dtStr.match(/(\d{1,2})-([A-Za-z]{3})-(\d{4})\s(\d{2}):(\d{2}):(\d{2})/);
+      if (parts) {
+        const [, day, month, year, hours, minutes, seconds] = parts;
+        const monthIndex = new Date(`${month} 1, ${year}`).getMonth();
+        date = new Date(parseInt(year), monthIndex, parseInt(day), parseInt(hours), parseInt(minutes), parseInt(seconds));
+      }
+    }
+    // Format 3: ISO format "2026-04-08T15:01:02"
+    else if (dtStr.includes('T')) {
+      date = new Date(dtStr);
+    }
+    // Format 4: Try default Date parsing
+    else {
+      date = new Date(dtStr);
+    }
+    
+    if (isNaN(date.getTime())) {
+      console.error('❌ Invalid date after parsing:', dtStr);
+      return '—';
+    }
+    
+    console.log('✅ Parsed date:', date);
+    
+    // Use UTC time for consistent formatting
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth())).toLocaleDateString('en-IN', { month: 'short' });
+    const year = date.getUTCFullYear();
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    
+    const formatted = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    console.log('📌 Formatted:', dtStr, '->', formatted);
+    return formatted;
+  } catch (e) {
+    console.error('❌ Error formatting date:', e.message, 'Input:', dt);
+    return '—';
+  }
+};
+
 export function ViewToggle({ view, onChange }) {
   return (
     <div className="view-toggle">

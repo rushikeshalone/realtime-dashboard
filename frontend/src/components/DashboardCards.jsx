@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import C3Chart from './C3Chart.jsx';
-import { ViewToggle, NoData, UpdatedBadge, formatCurrency, Badge, formatCreatedOn } from './utils.jsx';
+import { ViewToggle, NoData, UpdatedBadge, formatCurrency, Badge, formatCreatedOn, formatDateField } from './utils.jsx';
 
 // ============================================================
 // Auto Scroll Container 
@@ -77,11 +77,17 @@ function getActiveColumns(configs, cardName) {
 // Render a cell value with special formatting
 function renderCell(col, row) {
   const val = row[col.ColumnName];
-  // Date/Time columns
-  if (col.ColumnName === 'TransactionDate' || col.ColumnName === 'LastLoginTime' || col.ColumnName === 'DayEndDoneAt' || col.ColumnName === 'DayBeginAt' || col.ColumnName === 'LastDayEndDate' || col.ColumnName === 'CurrentDate') {
-    if (!val) return '—';
-    return new Date(val).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' });
+  
+  // Date/Time columns — use consistent formatting
+  const dateColumns = [
+    'TransactionDate', 'LastLoginTime', 'DayEndDoneAt', 'DayBeginAt', 
+    'LastDayEndDate', 'CurrentDate', 'ReportDate', 'CreatedOn', 'DayEndDate'
+  ];
+  
+  if (dateColumns.includes(col.ColumnName)) {
+    return formatDateField(val);
   }
+  
   // Currency columns
   if (['Deposits', 'Loans', 'OpeningCashPosition', 'CurrentCashPosition', 'DepositPosition', 'WithdrawlPosition', 'TotalCashPosition', 'OpeningBankPosition', 'CurrentBankPosition', 'LiabilityPosition', 'AssetPosition', 'TransactionAmount'].includes(col.ColumnName)) {
     return <span className="num">{formatCurrency(val)}</span>;
@@ -280,7 +286,7 @@ export function LiveTransactionsCard({ data = [], timestamp, configs = [] }) {
                     <td className="dim">{row.BranchName}</td>
                     <td><Badge type={row.TransactionType}>{row.TransactionType}</Badge></td>
                     <td className="num">{formatCurrency(row.TransactionAmount)}</td>
-                    <td className="dim" style={{ fontSize: 11 }}>{new Date(row.TransactionDate).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</td>
+                    <td className="dim" style={{ fontSize: 11 }}>{formatDateField(row.TransactionDate)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -553,7 +559,7 @@ export function LoggedInUsersCard({ data = [], timestamp, configs = [] }) {
                     <td style={{ fontWeight: 500 }}>{row.UserName}</td>
                     <td><Badge type={row.UserRole}>{row.UserRole}</Badge></td>
                     <td className="dim">{row.BranchName}</td>
-                    <td className="dim" style={{ fontSize: 11 }}>{new Date(row.LastLoginTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</td>
+                    <td className="dim" style={{ fontSize: 11 }}>{formatDateField(row.LastLoginTime)}</td>
                   </tr>
                 ))}
               </tbody>
