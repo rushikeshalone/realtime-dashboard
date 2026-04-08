@@ -1,5 +1,0 @@
-=== msnodesqlv8 ConnectionString Test ===
-Time: 2026-04-05T18:08:23.940Z
-Testing driver: ODBC Driver 17 for SQL Server...
-  ✅ SUCCESS using driver: ODBC Driver 17 for SQL Server (Rushi, DESKTOP-40B0H7H\Rushikesh)
-
