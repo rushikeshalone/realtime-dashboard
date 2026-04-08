@@ -63,6 +63,7 @@
   --bg-primary: #050811;
   --bg-secondary: #0a0f1d;
   --bg-card: rgba(20, 25, 41, 0.7);
+   --bg-cardTable: rgba(7, 9, 17, 0.7);
   /* Transparent for glass look */
   --bg-card-hover: rgba(30, 41, 59, 0.8);
   --bg-glass: rgba(255, 255, 255, 0.05);
@@ -208,9 +209,10 @@ body {
 }
 
 .last-updated {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   font-family: var(--font-mono);
+  font-weight: bold;
 }
 
 .main-content {
@@ -492,12 +494,12 @@ body {
 
 .data-table thead th {
   position: sticky;
-  top: 0;
+  top: -8px;
   z-index: 10;
-  background: var(--bg-card);
+  background: #ffffff;
   text-align: left;
   padding: 8px 10px;
-  color: var(--text-muted);
+  color: #000000;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -524,6 +526,11 @@ body {
   color: var(--text-primary);
   vertical-align: middle;
   white-space: nowrap;
+}
+
+.dark .data-table thead th {
+  background: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
 }
 
 .data-table .num {
