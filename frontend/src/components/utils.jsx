@@ -37,18 +37,27 @@ export const formatCreatedOn = (dt) => {
     return '—';
   }
   try {
-    const date = new Date(dt);
+    // SQL Server format: "2026-04-08 15:01:02.380"
+    // Replace space with T for ISO format: "2026-04-08T15:01:02.380"
+    const isoString = String(dt).replace(' ', 'T');
+    console.log('🔄 ISO formatted string:', isoString);
+    
+    const date = new Date(isoString);
     console.log('✅ Parsed date:', date);
+    
     if (isNaN(date.getTime())) {
-      console.error('❌ Invalid date:', dt);
+      console.error('❌ Invalid date after parsing:', dt);
       return '—';
     }
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = date.toLocaleDateString('en-IN', { month: 'short' });
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+    // Use UTC time since the datetime from SQL doesn't have timezone info
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth())).toLocaleDateString('en-IN', { month: 'short' });
+    const year = date.getUTCFullYear();
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    
     const formatted = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
     console.log('📌 Formatted date:', formatted);
     return formatted;
