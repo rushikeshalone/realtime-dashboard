@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import C3Chart from './C3Chart.jsx';
-import { ViewToggle, NoData, UpdatedBadge, formatCurrency, Badge } from './utils.jsx';
+import { ViewToggle, NoData, UpdatedBadge, formatCurrency, Badge, formatCreatedOn } from './utils.jsx';
 
 // ============================================================
 // Auto Scroll Container 
@@ -147,6 +147,13 @@ export function CDRatioCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
   const activeCols = getActiveColumns(configs, 'CD Ratio Analysis');
 
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log('📊 CDRatioCard data:', data[0]);
+      console.log('📅 CreatedOn field:', data[0].CreatedOn);
+    }
+  }, [data]);
+
   return (
     <div className="card">
       <div className="card-header">
@@ -220,7 +227,7 @@ export function CDRatioCard({ data = [], timestamp, configs = [] }) {
 
       <div className="card-footer">
         <span className="card-count">{data.length} branches</span>
-        <UpdatedBadge timestamp={timestamp} />
+        <div className="created-on-date">{data.length > 0 && data[0].CreatedOn ? formatCreatedOn(data[0].CreatedOn) : '—'}</div>
       </div>
     </div>
   );
@@ -232,6 +239,13 @@ export function CDRatioCard({ data = [], timestamp, configs = [] }) {
 export function LiveTransactionsCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
   const activeCols = getActiveColumns(configs, 'Live Transactions');
+
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log('💳 LiveTransactionsCard data:', data[0]);
+      console.log('📅 CreatedOn field:', data[0].CreatedOn);
+    }
+  }, [data]);
 
   const chartData = data.slice(0, 15).map(r => ({
     name: r.CustomerName?.split(' ')[0] || 'N/A',
@@ -301,7 +315,7 @@ export function LiveTransactionsCard({ data = [], timestamp, configs = [] }) {
 
       <div className="card-footer">
         <span className="card-count">{data.length} transactions</span>
-        <UpdatedBadge timestamp={timestamp} />
+        <div className="created-on-date">{data.length > 0 && data[0].CreatedOn ? formatCreatedOn(data[0].CreatedOn) : '—'}</div>
       </div>
     </div>
   );
@@ -313,6 +327,13 @@ export function LiveTransactionsCard({ data = [], timestamp, configs = [] }) {
 export function BankPositionCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
   const activeCols = getActiveColumns(configs, 'Bank Position');
+
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log('🏦 BankPositionCard data:', data[0]);
+      console.log('📅 CreatedOn field:', data[0].CreatedOn);
+    }
+  }, [data]);
 
   const chartData = data.slice(0, 10).map(r => ({
     name: r.BranchName?.split(' ')[0] || 'N/A',
@@ -385,7 +406,7 @@ export function BankPositionCard({ data = [], timestamp, configs = [] }) {
 
       <div className="card-footer">
         <span className="card-count">{data.length} records</span>
-        <UpdatedBadge timestamp={timestamp} />
+        <div className="created-on-date">{data.length > 0 && data[0].CreatedOn ? formatCreatedOn(data[0].CreatedOn) : '—'}</div>
       </div>
     </div>
   );
@@ -397,6 +418,13 @@ export function BankPositionCard({ data = [], timestamp, configs = [] }) {
 export function CashPositionCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
   const activeCols = getActiveColumns(configs, 'Cash Position');
+
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log('💰 CashPositionCard data:', data[0]);
+      console.log('📅 CreatedOn field:', data[0].CreatedOn);
+    }
+  }, [data]);
 
   const chartData = data.map(r => ({
     name: r.BranchName?.split(' ')[0] || 'N/A',
@@ -470,7 +498,7 @@ export function CashPositionCard({ data = [], timestamp, configs = [] }) {
 
       <div className="card-footer">
         <span className="card-count">{data.length} branches</span>
-        <UpdatedBadge timestamp={timestamp} />
+        <div className="created-on-date">{data.length > 0 && data[0].CreatedOn ? formatCreatedOn(data[0].CreatedOn) : '—'}</div>
       </div>
     </div>
   );
@@ -482,6 +510,13 @@ export function CashPositionCard({ data = [], timestamp, configs = [] }) {
 export function LoggedInUsersCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
   const activeCols = getActiveColumns(configs, 'Logged In Users');
+
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log('👥 LoggedInUsersCard data:', data[0]);
+      console.log('📅 CreatedOn field:', data[0].CreatedOn);
+    }
+  }, [data]);
 
   const activeCount = data.filter(u => u.IsActive === 1).length;
   const roleData = data.reduce((acc, u) => {
@@ -556,7 +591,7 @@ export function LoggedInUsersCard({ data = [], timestamp, configs = [] }) {
 
       <div className="card-footer">
         <span className="card-count">{data.length} users</span>
-        <UpdatedBadge timestamp={timestamp} />
+        <div className="created-on-date">{data.length > 0 && data[0].CreatedOn ? formatCreatedOn(data[0].CreatedOn) : '—'}</div>
       </div>
     </div>
   );
@@ -568,6 +603,13 @@ export function LoggedInUsersCard({ data = [], timestamp, configs = [] }) {
 export function DayEndStatusCard({ data = [], timestamp, configs = [] }) {
   const [view, setView] = useState('table');
   const activeCols = getActiveColumns(configs, 'Day End Status');
+
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log('🌙 DayEndStatusCard data:', data[0]);
+      console.log('📅 CreatedOn field:', data[0].CreatedOn);
+    }
+  }, [data]);
 
   const statusCount = data.reduce((acc, r) => {
     const done = r.DayEndDoneAt ? 'Completed' : 'Pending';
@@ -641,7 +683,7 @@ export function DayEndStatusCard({ data = [], timestamp, configs = [] }) {
 
       <div className="card-footer">
         <span className="card-count">{data.length} branches</span>
-        <UpdatedBadge timestamp={timestamp} />
+        <div className="created-on-date">{data.length > 0 && data[0].CreatedOn ? formatCreatedOn(data[0].CreatedOn) : '—'}</div>
       </div>
     </div>
   );

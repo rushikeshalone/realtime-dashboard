@@ -30,6 +30,34 @@ export const formatTimeAgo = (dt) => {
   catch { return '—'; }
 };
 
+export const formatCreatedOn = (dt) => {
+  console.log('📅 formatCreatedOn received:', dt, 'Type:', typeof dt);
+  if (!dt) {
+    console.warn('⚠️ No CreatedOn date provided');
+    return '—';
+  }
+  try {
+    const date = new Date(dt);
+    console.log('✅ Parsed date:', date);
+    if (isNaN(date.getTime())) {
+      console.error('❌ Invalid date:', dt);
+      return '—';
+    }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = date.toLocaleDateString('en-IN', { month: 'short' });
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const formatted = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    console.log('📌 Formatted date:', formatted);
+    return formatted;
+  } catch (e) {
+    console.error('❌ Error formatting date:', e.message, 'Input:', dt);
+    return '—';
+  }
+};
+
 export function ViewToggle({ view, onChange }) {
   return (
     <div className="view-toggle">

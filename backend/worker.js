@@ -115,7 +115,7 @@ const fetchCDRatioAnalysis = async () => {
   const result = await query(`
     SELECT TOP 50
       CDRatioAnalysisId, OrgElementId, BranchName,
-      Deposits, Loans, CDRatio, ReportDate
+      Deposits, Loans, CDRatio, ReportDate,CreatedOn
     FROM Dashboard_CDRatioAnalysis
     ORDER BY ReportDate DESC
   `);
@@ -126,7 +126,7 @@ const fetchLiveTransactions = async () => {
   const result = await query(`
     SELECT TOP 100
       LiveTransactionsId, OrgElementId, BranchName,
-      CustomerName, TransactionType, TransactionAmount, TransactionDate
+      CustomerName, TransactionType, TransactionAmount, TransactionDate,CreatedOn
     FROM Dashboard_LiveTransactions
     ORDER BY TransactionDate DESC
   `);
@@ -139,7 +139,7 @@ const fetchBankPosition = async () => {
       BankPositionId, ReportDate, OrgElementId, BranchName,
       AccountHeadId, AccountHeadName,
       OpeningBankPosition, CurrentBankPosition,
-      LiabilityPosition, AssetPosition
+      LiabilityPosition, AssetPosition,CreatedOn
     FROM Dashboard_BankPosition
     ORDER BY ReportDate DESC
   `);
@@ -151,7 +151,7 @@ const fetchCashPosition = async () => {
     SELECT TOP 50
       CashPositionId, ReportDate, OrgElementId, BranchName,
       OpeningCashPosition, CurrentCashPosition,
-      DepositPosition, WithdrawlPosition, TotalCashPosition
+      DepositPosition, WithdrawlPosition, TotalCashPosition,CreatedOn
     FROM Dashboard_CashPosition
     ORDER BY ReportDate DESC
   `);
@@ -162,7 +162,7 @@ const fetchLoggedInUsers = async () => {
   const result = await query(`
     SELECT
       LogedInUserId, UserName, UserRole,
-      BranchName, LastLoginTime, IsActive
+      BranchName, LastLoginTime, IsActive,CreatedOn
     FROM Dashboard_LogedInUser
     ORDER BY LastLoginTime DESC
   `);
@@ -174,7 +174,7 @@ const fetchDayEndStatus = async () => {
     SELECT
       Dashboard_DayEndStatusId, OrgElementId, BranchName,
       LastDayEndDate, DayEndDoneBy, DayEndDoneAt,
-      DayBeginBy, DayBeginAt, CurrentDate
+      DayBeginBy, DayBeginAt, CurrentDate,CreatedOn
     FROM Dashboard_DayEndStatus
     ORDER BY OrgElementId
   `);
