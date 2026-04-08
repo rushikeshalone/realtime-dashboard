@@ -40,16 +40,20 @@ const fetchData = async (channel, sqlFetcher) => {
   const source = readSourceConfig();
   if (source === 'SQL') return await sqlFetcher();
 
+  const fileExtension = source === 'EXCEL' ? '.xlsx' : '.' + source.toLowerCase();
+  
+  // Try custom path first
   let basePath = getBasePath();
-  // Use win32 explicitly and handle UNC prefix manually to avoid triple-backslash quirks
-  const isUNC = basePath.startsWith('\\\\');
-  let baseFile = path.win32.join(basePath, source.toLowerCase(), channel);
-
-  if (isUNC && !baseFile.startsWith('\\\\')) {
-    baseFile = '\\\\' + baseFile.replace(/^[\\\/]+/, '');
+  let baseFile = path.join(basePath, source.toLowerCase(), channel);
+  const customFilePath = baseFile + fileExtension;
+  
+  // Check if file exists at custom path, otherwise use local files directory
+  if (!fs.existsSync(customFilePath)) {
+    console.log(`⚠️ File not found at: ${customFilePath}`);
+    basePath = path.join(__dirname, 'files');
+    baseFile = path.join(basePath, source.toLowerCase(), channel);
+    console.log(`📁 Using local files path: ${baseFile}`);
   }
-  // Ensure we don't have triple slashes
-  baseFile = baseFile.replace(/^\\\\\\+/, '\\\\');
 
   try {
     if (source === 'JSON') {

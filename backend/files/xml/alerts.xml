@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rows>
+  <Row>
+    <AlertId>1</AlertId>
+    <Title>Happy Birthday 🎉</Title>
+    <Message>Wishing you a very Happy Birthday! Have a great year ahead.</Message>
+    <AlertType>BIRTHDAY</AlertType>
+    <DisplayType>MODAL</DisplayType>
+    <StartDate>2026-04-06</StartDate>
+    <EndDate>2026-04-06</EndDate>
+    <StartTime>00:00:00</StartTime>
+    <EndTime>23:59:59</EndTime>
+    <RepeatType>ONCE</RepeatType>
+    <TargetUserId></TargetUserId>
+    <TargetRole></TargetRole>
+    <IsActive>1</IsActive>
+    <Priority>1</Priority>
+    <CreatedOn>2026-01-01T23:21:36.240</CreatedOn>
+    <CreatedBy>1</CreatedBy>
+  </Row>
+  <Row>
+    <AlertId>2</AlertId>
+    <Title>System Maintenance</Title>
+    <Message>System will be under maintenance today from 10 PM to 11 PM.</Message>
+    <AlertType>NOTICE</AlertType>
+    <DisplayType>BANNER</DisplayType>
+    <StartDate>2026-01-02</StartDate>
+    <EndDate>2026-12-31</EndDate>
+    <StartTime>00:00:00</StartTime>
+    <EndTime>23:59:59</EndTime>
+    <RepeatType>DAILY</RepeatType>
+    <TargetUserId></TargetUserId>
+    <TargetRole>ADMIN</TargetRole>
+    <IsActive>1</IsActive>
+    <Priority>2</Priority>
+    <CreatedOn>2026-01-01T23:21:36.240</CreatedOn>
+    <CreatedBy>1</CreatedBy>
+  </Row>
+  <Row>
+    <AlertId>3</AlertId>
+    <Title>Low Balance Alert</Title>
+    <Message>Your account balance is running low. Please maintain minimum balance.</Message>
+    <AlertType>WARNING</AlertType>
+    <DisplayType>TOAST</DisplayType>
+    <StartDate>2026-01-02</StartDate>
+    <EndDate>2026-01-08</EndDate>
+    <StartTime>00:00:00</StartTime>
+    <EndTime>23:59:59</EndTime>
+    <RepeatType>DAILY</RepeatType>
+    <TargetUserId></TargetUserId>
+    <TargetRole>USER</TargetRole>
+    <IsActive>1</IsActive>
+    <Priority>1</Priority>
+    <CreatedOn>2026-01-01T23:21:36.240</CreatedOn>
+    <CreatedBy>1</CreatedBy>
+  </Row>
+  <Row>
+    <AlertId>4</AlertId>
+    <Title>Transaction Successful</Title>
+    <Message>Your transaction has been completed successfully.</Message>
+    <AlertType>SUCCESS</AlertType>
+    <DisplayType>TOAST</DisplayType>
+    <StartDate>2026-01-02</StartDate>
+    <EndDate>2026-01-02</EndDate>
+    <StartTime>00:00:00</StartTime>
+    <EndTime></EndTime>
+    <RepeatType>ONCE</RepeatType>
+    <TargetUserId></TargetUserId>
+    <TargetRole></TargetRole>
+    <IsActive>1</IsActive>
+    <Priority>2</Priority>
+    <CreatedOn>2026-01-01T23:21:36.240</CreatedOn>
+    <CreatedBy>1</CreatedBy>
+  </Row>
+</Rows>
