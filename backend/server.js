@@ -10,6 +10,9 @@ const { getPool } = require('./db');
 const { connectRedis, isRedisAvailable } = require('./redis');
 const { pollAll, fetchAllCached, CHANNELS } = require('./worker');
 const dashboardRoutes = require('./routes/dashboard');
+const queryRoutes = require('./routes/queryRoutes');
+const ollamaRoutes = require('./routes/ollama.routes');
+const pineconeService = require('./services/pinecone.service');
 
 const app = express();
 const server = http.createServer(app);
@@ -70,6 +73,10 @@ app.get('/health', (req, res) => res.json({
 
 // Protected dashboard routes
 app.use('/api/dashboard', apiKeyAuth, dashboardRoutes);
+
+// Chatbot / Query routes (no auth required for health check, auth for others)
+app.use('/api/chat', ollamaRoutes);
+app.use('/api/query', queryRoutes);
 
 // 404
 app.use((req, res) => res.status(404).json({ error: 'Route not found' }));
@@ -183,6 +190,12 @@ const connectDBWithRetry = async () => {
 const start = async () => {
   // Try Redis (optional — never blocks startup)
   connectRedis().catch(() => { });
+
+  // Initialize Pinecone if keys are available
+  if (process.env.PINECONE_API_KEY) {
+    console.log('🌲 Initializing Pinecone service...');
+    pineconeService.initialize();
+  }
 
   // Handle port-in-use error clearly
   server.on('error', (err) => {
