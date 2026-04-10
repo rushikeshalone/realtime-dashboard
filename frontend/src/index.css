@@ -53,7 +53,7 @@
   --radius-xl: 20px;
 
   --font-main: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'Inter', system-ui, sans-serif;
 
   --transition: all 0.2s ease;
 }
@@ -63,7 +63,7 @@
   --bg-primary: #050811;
   --bg-secondary: #0a0f1d;
   --bg-card: rgba(20, 25, 41, 0.7);
-   --bg-cardTable: rgba(7, 9, 17, 0.7);
+  --bg-cardTable: rgba(7, 9, 17, 0.7);
   /* Transparent for glass look */
   --bg-card-hover: rgba(30, 41, 59, 0.8);
   --bg-glass: rgba(255, 255, 255, 0.05);
@@ -211,7 +211,7 @@ body {
 .last-updated {
   font-size: 12px;
   color: var(--text-muted);
-  font-family: var(--font-mono);
+  font-family: var(--font-main);
   font-weight: bold;
 }
 
@@ -376,8 +376,8 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
-  max-height: 42vh;
-  min-height: 250px;
+  max-height: 40vh;
+  min-height: 200px;
   position: relative;
 }
 
@@ -398,7 +398,7 @@ body {
 }
 
 .card-header {
-  @apply flex items-center justify-between px-4 py-2 border-b;
+  @apply flex items-center justify-between px-2 py-1 border-b;
   border-color: var(--border);
   background: var(--bg-card-hover);
 }
@@ -461,7 +461,7 @@ body {
 
 .created-on-date {
   @apply font-bold text-[10px] text-slate-300;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-main);
   letter-spacing: 0.5px;
   color: #000000
 }
@@ -470,11 +470,11 @@ body {
   @apply text-slate-200;
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.5px;
-  
+
 }
 
 .updated-badge {
-  @apply text-slate-400 font-mono flex items-center gap-1.5;
+  @apply text-slate-400 font-medium flex items-center gap-1.5;
 }
 
 .updated-dot {
@@ -536,7 +536,7 @@ body {
 }
 
 .data-table tbody td {
-  padding: 9px 10px;
+  padding: 4px 6px;
   color: var(--text-primary);
   vertical-align: middle;
   white-space: nowrap;
@@ -548,7 +548,7 @@ body {
 }
 
 .data-table .num {
-  @apply font-mono text-[11.5px];
+  @apply font-medium;
 }
 
 .data-table .dim {
