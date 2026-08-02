@@ -1,6 +1,7 @@
 const { createClient } = require('redis');
 require('dotenv').config();
 
+const REDIS_ENABLED = (process.env.REDIS_ENABLED || 'false').toLowerCase() === 'true';
 let redisClient = null;
 let publisher = null;
 let subscriber = null;
@@ -40,6 +41,12 @@ const buildClient = () => {
 };
 
 const connectRedis = async () => {
+  if (!REDIS_ENABLED) {
+    console.log('⚠️  Redis is disabled by REDIS_ENABLED=false; using direct DB mode');
+    redisAvailable = false;
+    return;
+  }
+
   try {
     redisClient = buildClient();
     publisher  = buildClient();

@@ -10,6 +10,8 @@ const { getPool } = require('./db');
 const { connectRedis, isRedisAvailable } = require('./redis');
 const { pollAll, fetchAllCached, CHANNELS } = require('./worker');
 const dashboardRoutes = require('./routes/dashboard');
+
+const REDIS_ENABLED = (process.env.REDIS_ENABLED || 'false').toLowerCase() === 'true';
 const queryRoutes = require('./routes/queryRoutes');
 const ollamaRoutes = require('./routes/ollama.routes');
 const pineconeService = require('./services/pinecone.service');
@@ -188,8 +190,12 @@ const connectDBWithRetry = async () => {
 };
 
 const start = async () => {
-  // Try Redis (optional — never blocks startup)
-  connectRedis().catch(() => { });
+  // Try Redis only if enabled
+  if (REDIS_ENABLED) {
+    connectRedis().catch(() => { });
+  } else {
+    console.log('⚠️  Redis disabled via REDIS_ENABLED env; skipping Redis connection');
+  }
 
   // Initialize Pinecone if keys are available
   if (process.env.PINECONE_API_KEY) {

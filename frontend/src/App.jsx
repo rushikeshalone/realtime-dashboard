@@ -12,7 +12,7 @@ import {
   DayEndStatusCard,
 } from './components/DashboardCards.jsx';
 import { formatCurrency, formatNumber } from './components/utils.jsx';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useTheme } from 'next-themes';
 import { AlertModal, AlertBanners, triggerToast } from './components/AlertDisplay.jsx';
 
@@ -388,7 +388,18 @@ export default function App() {
   }, []);
 
   // ── Merge: socket data overlays API data (real-time wins) ──
-  const dashboardData = { ...(apiData || {}), ...socketData };
+  const dashboardData = {
+    ...(apiData || {}),
+    top_cards: apiData?.top_cards || apiData?.topCards || [],
+    cd_ratio_analysis: apiData?.cd_ratio_analysis || apiData?.cdRatio || [],
+    live_transactions: apiData?.live_transactions || apiData?.liveTransactions || [],
+    bank_position: apiData?.bank_position || apiData?.bankPosition || [],
+    cash_position: apiData?.cash_position || apiData?.cashPosition || [],
+    logged_in_users: apiData?.logged_in_users || apiData?.loggedInUsers || [],
+    day_end_status: apiData?.day_end_status || apiData?.dayEndStatus || [],
+    alerts: apiData?.alerts || [],
+    ...socketData,
+  };
   const lastUpdated = Object.values(timestamps)[0] || (dataUpdatedAt ? new Date(dataUpdatedAt).toISOString() : null);
 
   const visibleAlerts = (dashboardData.alerts || []).filter(
@@ -538,8 +549,6 @@ export default function App() {
         onSaved={() => refetchConfigs()}
       />
 
-      {/* ── Toast Container ── */}
-      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 }

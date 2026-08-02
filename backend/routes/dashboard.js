@@ -27,7 +27,16 @@ router.get('/summary', async (req, res) => {
       cachedQuery('dash:alerts', () => fetchData(CHANNELS.ALERTS, FETCHERS[CHANNELS.ALERTS]))
     ]);
 
-    res.json({ topCards, cdRatio, liveTransactions, bankPosition, cashPosition, loggedInUsers, dayEndStatus, alerts });
+    res.json({
+      top_cards: topCards,
+      cd_ratio_analysis: cdRatio,
+      live_transactions: liveTransactions,
+      bank_position: bankPosition,
+      cash_position: cashPosition,
+      logged_in_users: loggedInUsers,
+      day_end_status: dayEndStatus,
+      alerts,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch dashboard summary', detail: err.message });

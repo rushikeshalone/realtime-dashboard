@@ -69,9 +69,10 @@ const CustomTooltip = ({ active, payload, label }) => {
 // ============================================================
 function getActiveColumns(configs, cardName) {
   if (!configs || configs.length === 0) return null;
-  return configs
+  const active = configs
     .filter(c => c.CardName === cardName && c.IsDisplay === 1)
     .sort((a, b) => a.Sequence - b.Sequence);
+  return active.length ? active : null;
 }
 
 // Render a cell value with special formatting
